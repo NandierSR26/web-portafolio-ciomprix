@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react"
+import { ReactNode, useEffect, useState } from "react"
 import { MainContext } from "./MainContext"
 import { api } from "../../api"
 import { ICategory, ICompany, IContent, ISolutions } from "../../interfaces"
 
 interface MainProviderProps {
-    children: JSX.Element
+    children: ReactNode
 }
 
 export const MainProvider = ({ children }: MainProviderProps) => {
@@ -312,6 +312,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
             contentsByCategory,
             companies,
             companyByID,
+            fetching,
 
             getSolutions,
             getSolutionByID,
@@ -337,7 +338,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
             deleteComany,
 
         }}>
-
+            { children }
         </MainContext.Provider>
     )
 }

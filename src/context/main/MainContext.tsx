@@ -3,6 +3,8 @@ import { ICategory, ICompany, IContent, ISolutions } from "../../interfaces";
 
 interface MainContextProps {
     // PROPIEDADES
+    fetching: boolean;
+
     // soluciones
     solutions: ISolutions[];
     solutionByID: ISolutions;
