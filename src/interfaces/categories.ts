@@ -8,3 +8,7 @@ export interface ICategory {
     date_create: number;
     date_update: number;
 }
+
+export interface ICategoriesBySolution {
+    categories: Array<Array<ICategory>>
+}

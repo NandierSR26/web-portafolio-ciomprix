@@ -34,7 +34,7 @@ interface MainContextProps {
     // categories
     getCategories: () => Promise<void>;
     getCategoryById: (id:number) => Promise<void>;
-    getCategoryByIdSolution: (id:number) => Promise<void>;
+    getCategoryByIdSolution: (id:number) => Promise<ICategory[]>;
     createCategory: (data:ICategory) => Promise<void>;
     updateCategory: (id:number, data:ICategory) => Promise<void>;
     deleteCategory: (id:number) => Promise<void>;

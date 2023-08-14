@@ -1,0 +1,12 @@
+.carousel__items__container {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    gap: 40px;
+    width: 100%;
+    overflow: scroll;
+}
+
+.carousel__items__container::-webkit-scrollbar {
+    display: none;
+}

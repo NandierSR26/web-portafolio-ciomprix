@@ -109,15 +109,17 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         }
     }
 
-    const getCategoryByIdSolution = async (id: number) => {
+    const getCategoryByIdSolution = async (id: number): Promise<ICategory[]> => {
         try {
             setFetching(true)
             const { data: { data } } = await categoriesApi.getCategoryByIdSolution(id)
             setCategoriesBySolution(data)
             setFetching(false)
+            return data
         } catch (error) {
             console.log(error)
             setFetching(false)
+            return []
         }
     }
 
@@ -298,6 +300,8 @@ export const MainProvider = ({ children }: MainProviderProps) => {
 
 
     useEffect(() => {
+        getSolutions()
+        getCategories()
     }, [])
 
     return (
