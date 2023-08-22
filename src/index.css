@@ -37,8 +37,18 @@ a:hover {
   width: 100vw;
   min-height: 100vh;
   height: 100%;
-  background-color: #fff;
+  background-color: #EBEBEB;
   overflow-x: hidden;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 24px;
+  font-weight: 400;
 }
 
 body {
@@ -83,5 +93,25 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .title {
+    font-size: 56px;
+  }
+
+  .subtitle {
+    font-size: 30px;
+  }
+}
+
+@media screen and (min-width:1536px) {
+  .title {
+    font-size: 72px;
+  }
+
+  .subtitle {
+    font-size: 36px;
   }
 }

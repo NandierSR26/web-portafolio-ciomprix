@@ -1,14 +1,27 @@
 .landing__banner {
     width: 100%;
-    height: 115vh;
-    background-size: 100% auto;
+    height: 500px;
+    background-size: 100% 100%;
     background-position: 70% 0%;
     background-repeat: no-repeat;
 }
 
 .landing__solutions_container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 40px;
-    margin-top: 200px;
+    width: 100%;
+    max-width: 1800px;
 }
+
+@media screen and (min-width:1024px) {
+    .landing__banner {
+        height: 700px;
+    }
+}
+
+// @media screen and (min-width: 1375px) {
+//     .landing__solutions_container {
+//         bottom: 0;
+//     }
+// }

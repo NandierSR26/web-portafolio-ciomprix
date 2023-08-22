@@ -10,7 +10,7 @@ export const SolutionMiniCard = ({ image, title }: SolutionMiniCardProps) => {
     return (
         <div className={`${styles.solution_mini_card} bg-dark-purple p-5 rounded-xl`}>
             <img 
-                src={image}
+                src={`${import.meta.env.VITE_API_URL_DEVELOPMENT}/${image}`}
                 className="mb-5 mx-auto"
                 alt="solution_image" 
             />

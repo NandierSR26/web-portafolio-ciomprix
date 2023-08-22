@@ -1,0 +1,16 @@
+.category_detail__banner {
+    background-size: 100% 100%;
+    background-position-y: top;
+    background-position-x: left;
+    background-repeat: no-repeat;
+    height: 650px;
+}
+
+.contents__container {
+    display: grid;
+    grid-template-columns: repeat(
+        auto-fit,
+        minmax(400px, 1fr)
+    );
+    gap: 40px;
+}

@@ -11,10 +11,11 @@ import styles from './CarouselSection.module.scss'
 interface CarouselSectionProps {
     children: ReactNode;
     title: string;
-    element: ISolutions[]
+    element: ISolutions[];
+    className?: string;
 }
 
-export const CarouselSection = ({ children, title, element }: CarouselSectionProps) => {
+export const CarouselSection = ({ children, title, element, className }: CarouselSectionProps) => {
 
     const { width } = useScreenSize()
 
@@ -92,7 +93,7 @@ export const CarouselSection = ({ children, title, element }: CarouselSectionPro
     if (!element) return null
 
     return (
-        <section className='w-full px-7 md:px-28 max-w-[1500px] my-24 text-black' ref={widthUsableRef}>
+        <section className={`w-full px-7 md:px-28 max-w-[1500px] my-24 mx-auto text-black ${className}`} ref={widthUsableRef}>
             <h3 className='text-3xl lg:text-4xl font-medium'>{title}</h3>
             {(element.length > jump && identifyDevice() === "computer"/*Identificador de dispositivo*/) &&
                 <div className={`flex flex-row flex-nowrap justify-end my-1 h-8`}>

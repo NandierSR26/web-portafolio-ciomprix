@@ -19,7 +19,7 @@ export const CategoriesCard = ({ category }: CategoriesCardProps) => {
             <div className={`${styles.category__card__backdrop}`}>
                 <h4 className='w-full px-4 mb-6 openBold text-base xl:text-xl text-center font-medium'>{category.tittle_c}</h4>
                 <Link
-                    to={'/'}
+                    to={`/category/${category.id}`}
                     className='w-24 py-1 mb-8 bg-blue-500 px-6 text-white rounded-full text-l text-center openMedium transition-all duration-200 hover:scale-110 hover:text-white'
                 >
                     Ir

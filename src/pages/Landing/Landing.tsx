@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react'
-import bannerBgImage from '/images/img-main-banner.png'
-import ciomprixLogo from '/images/ciomprix-logo-white.svg'
 import { CategoriesCard, SolutionMiniCard } from '../../components'
-import styles from './Landing.module.scss'
-import { useMainContext } from '../../context'
 import { CarouselSection } from '../../components/CarouselSection'
 import { ICategory } from '../../interfaces'
-import { Link } from 'react-router-dom'
+import { useMainContext } from '../../context'
+import useScreenSize from '../../hooks/useScreenSize'
+
+import bannerBgImage from '/images/img-main-banner.png'
+import bannerBgMobile from '/images/img-main-banner-mobile.png'
+import ciomprixLogo from '/images/ciomprix-logo-white.svg'
+import styles from './Landing.module.scss'
 
 export const Landing = () => {
 
     const { solutions, categories, fetching, getCategoryByIdSolution } = useMainContext()
     const [categoriesBySolution, setCategoriesBySolution] = useState<ICategory[]>([])
+    const { width } = useScreenSize() 
 
     const getCategoriesBySolution = (id_solution: number): ICategory[] => {
         return categories.filter(category => category.id_s === id_solution)
@@ -23,47 +26,48 @@ export const Landing = () => {
     // }, [categoriesBySolution])
 
     return (
-        <div className="bg-white w-full h-full">
+        <div>
+            <header className="flex justify-between items-center px-7 md:px-28 py-5 bg-blue-primary">
+                <figure className="w-40 md:w-auto">
+                    <img src={ciomprixLogo} className='' alt="logo" />
+                </figure>
+
+                <div className="flex-1"></div>
+
+                <ul className="flex-1 justify-between items-center gap-10 hidden md:flex">
+                    <li>item 1</li>
+                    <li>item 2</li>
+                    <li>item 3</li>
+                    <li>item 4</li>
+                </ul>
+            </header>
             <div
-                className={`${styles.landing__banner}`}
+                className={`${styles.landing__banner} mb-5`}
                 style={{
-                    backgroundImage: `url(${bannerBgImage})`
+                    backgroundImage: `url(${width > 1024 ? bannerBgImage : bannerBgMobile})`,
                 }}
             >
-                <header className="flex justify-between items-center px-7 md:px-28 py-5">
-                    <figure>
-                        <img src={ciomprixLogo} alt="logo" />
-                    </figure>
-
-                    <div className="flex-1"></div>
-
-                    <ul className="flex flex-1 justify-between items-center gap-10">
-                        <li>item 1</li>
-                        <li>item 2</li>
-                        <li>item 3</li>
-                        <li>item 4</li>
-                    </ul>
-                </header>
-
-                <section className="w-full max-w-[1500px] mx-auto px-7 md:px-32 my-28">
-                    <h1 className="font-bold text-7xl w-2/4 mb-7">Conoce nuestro portafolio de servicios</h1>
-                    <p className="text-4xl font-normal w-2/4">La forma de generar aprendizaje mas facil</p>
-
-                    <div className={styles.landing__solutions_container}>
-                        {
-                            solutions.map(({ id, img_s, tittle_s }) => (
-                                <SolutionMiniCard key={id} image={img_s} title={tittle_s} />
-                            ))
-                        }
-                    </div>
+                <section className="w-full max-w-[1800px] mx-auto px-7 md:px-32 py-16 lg:py-20">
+                    <h1 className="title max-w-xs mx-auto lg:max-w-lg 2xl:max-w-3xl lg:mx-0 mb-7 text-center lg:text-left">Conoce nuestro portafolio de servicios</h1>
+                    <p className="subtitle max-w-xs mx-auto lg:max-w-lg 2xl:max-w-3xl lg:mx-0 text-center lg:text-left">La forma de generar aprendizaje mas facil</p>
                 </section>
 
             </div>
+
+            <div className={`${styles.landing__solutions_container} mx-auto px-7 md:px-32`}>
+                {
+                    solutions.map(({ id, img_s, tittle_s }) => (
+                        <SolutionMiniCard key={id} image={img_s} title={tittle_s} />
+                    ))
+                }
+            </div>
+
+
             {
-                solutions.map(solution => (
-                    <CarouselSection key={solution.id} element={solutions} title={solution.tittle_s}>
+                solutions.map((solution, i) => (
+                    <CarouselSection key={solution.id} element={solutions} title={solution.tittle_s} className={`${i === 0 ? 'mt-40' : 0}`}>
                         {getCategoriesBySolution(solution.id).map(category => (
-                           <CategoriesCard category={category} />
+                            <CategoriesCard category={category} />
                         ))}
                     </CarouselSection>
                 ))
