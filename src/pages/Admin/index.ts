@@ -1,1 +1,6 @@
 export * from './Login'
+export * from './Categories'
+export * from './Companies'
+export * from './Contents'
+export * from './Dashboard'
+export * from './Solutions'
