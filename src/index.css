@@ -53,11 +53,13 @@ a:hover {
 .title {
   font-size: 40px;
   font-weight: bold;
+  color: #ffffff;
 }
 
 .subtitle {
   font-size: 24px;
   font-weight: 400;
+  color: #ffffff;
 }
 
 body {

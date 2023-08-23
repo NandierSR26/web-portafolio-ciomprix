@@ -15,7 +15,7 @@ export const SolutionMiniCard = ({ image, title }: SolutionMiniCardProps) => {
                 alt="solution_image" 
             />
 
-            <h4 className="text-xl font-normal text-center">{ title }</h4>
+            <h4 className="text-xl font-normal text-center text-white">{ title }</h4>
         </div>
     )
 }

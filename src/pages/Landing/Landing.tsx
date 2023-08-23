@@ -35,10 +35,10 @@ export const Landing = () => {
                 <div className="flex-1"></div>
 
                 <ul className="flex-1 justify-between items-center gap-10 hidden md:flex">
-                    <li>item 1</li>
-                    <li>item 2</li>
-                    <li>item 3</li>
-                    <li>item 4</li>
+                    <li className={`${styles.landing__navlinks}`}>item 1</li>
+                    <li className={`${styles.landing__navlinks}`}>item 2</li>
+                    <li className={`${styles.landing__navlinks}`}>item 3</li>
+                    <li className={`${styles.landing__navlinks}`}>item 4</li>
                 </ul>
             </header>
             <div
@@ -57,16 +57,16 @@ export const Landing = () => {
             <div className={`${styles.landing__solutions_container} mx-auto px-7 md:px-32`}>
                 {
                     solutions.map(({ id, img_s, tittle_s }) => (
-                        <SolutionMiniCard key={id} image={img_s} title={tittle_s} />
+                        <SolutionMiniCard key={id} image={img_s as string} title={tittle_s as string} />
                     ))
                 }
             </div>
 
 
             {
-                solutions.map((solution, i) => (
-                    <CarouselSection key={solution.id} element={solutions} title={solution.tittle_s} className={`${i === 0 ? 'mt-40' : 0}`}>
-                        {getCategoriesBySolution(solution.id).map(category => (
+                solutions && solutions.map((solution, i) => (
+                    <CarouselSection key={solution.id} element={solutions} title={solution.tittle_s as string} className={`${i === 0 ? 'mt-40' : 0}`}>
+                        {getCategoriesBySolution(solution.id as number).map(category => (
                             <CategoriesCard key={category.id} category={category} />
                         ))}
                     </CarouselSection>
