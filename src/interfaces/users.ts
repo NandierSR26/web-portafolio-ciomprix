@@ -9,6 +9,6 @@ export interface IUser {
 }
 
 export interface ILoginData {
-    mail_u: string;
-    pass_u: string;
+    email: string;
+    pass: string;
 }

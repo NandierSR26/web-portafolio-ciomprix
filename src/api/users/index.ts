@@ -1,9 +1,10 @@
 import { AxiosInstance } from 'axios';
 import { ILoginData, IUser } from '../../interfaces';
+import { ApiResponse } from '../../interfaces/api';
 
 export default function Action(api:AxiosInstance) {
     return {
-        login: (data:ILoginData) => api.post('/login'),
+        login: (data:ILoginData) => api.post<ApiResponse>('/login', data),
         getUsers: () => api.get('/users'),
         createUser: (data:IUser) => api.post('/createUser', data),
         updateUser: (id:number, data:IUser) => api.put(`/updateUser/${id}`, data),

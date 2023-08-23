@@ -5,8 +5,12 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 
 import styles from './Login.module.scss'
+import { useAuthContext } from '../../../context/auth/AuthContext'
 
 export const Login = () => {
+
+    const { onLogin } = useAuthContext()
+
     return (
         <>
             <main className="flex w-screen min-h-screen h-screen bg-slate-100">
@@ -35,8 +39,8 @@ export const Login = () => {
                                 pass: Yup.string().required('Dato requerido')
                             })
                         }
-                        onSubmit={(values) => {
-                            
+                        onSubmit={async({email, pass}) => {
+                            await onLogin({email, pass})
                         }}
                     >
                         {({ errors, touched, handleSubmit, handleChange, values }) => (
