@@ -4,6 +4,7 @@ import { ILoginData, IUser } from "../../interfaces";
 interface AuthContextProps {
     // PROPIEDADES
     auth: IUser | null;
+    loading: boolean;
 
     // METODOS
     onLogin: (data:ILoginData) => Promise<void>;

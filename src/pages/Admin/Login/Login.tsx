@@ -23,7 +23,7 @@ export const Login = () => {
                 >
                     <div className="bg-[#0000008b] w-full flex flex-col items-start py-5 px-32">
                         <h1 className="title mb-5 max-w-3xl">Panel Administrativo</h1>
-                        <p className="text-xl font-medium max-w-xl">Administra tus contenidos para organizar y enriquecer tu portafolio y así sorprender a tus clientes</p>
+                        <p className="text-xl text-white font-medium max-w-xl">Administra tus contenidos para organizar y enriquecer tu portafolio y así sorprender a tus clientes</p>
                     </div>
                 </section>
 
@@ -46,8 +46,8 @@ export const Login = () => {
                         {({ errors, touched, handleSubmit, handleChange, values }) => (
 
                             <form onSubmit={handleSubmit} className={`max-w-5xl mx-auto ${styles.login__login_form}`}>
-                                <h2 className="text-3xl font-bold text-center mb-2">Iniciar Sesión</h2>
-                                <p className="text-lg font-medium text-center mb-10">Ingresa con tu usuario administrativo</p>
+                                <h2 className="text-white text-3xl font-bold text-center mb-2">Iniciar Sesión</h2>
+                                <p className="text-white text-lg font-medium text-center mb-10">Ingresa con tu usuario administrativo</p>
 
                                 <Input
                                     type='email'
@@ -72,7 +72,7 @@ export const Login = () => {
                                 />
 
                                 <button
-                                    className="text-lg font-bold bg-blue-primary w-full text-center p-2 rounded-xl"
+                                    className="text-lg font-bold bg-blue-primary w-full text-center p-2 rounded-xl text-white"
                                     type='submit'
                                 >
                                     Ingresar
