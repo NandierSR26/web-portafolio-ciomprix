@@ -67,7 +67,7 @@ export const Landing = () => {
                 solutions.map((solution, i) => (
                     <CarouselSection key={solution.id} element={solutions} title={solution.tittle_s} className={`${i === 0 ? 'mt-40' : 0}`}>
                         {getCategoriesBySolution(solution.id).map(category => (
-                            <CategoriesCard category={category} />
+                            <CategoriesCard key={category.id} category={category} />
                         ))}
                     </CarouselSection>
                 ))

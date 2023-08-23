@@ -46,7 +46,7 @@ export const CategoryDetail = () => {
 
             <section
                 style={{
-                    backgroundImage: `url(${solutionByID ? solutionByID.img_banner_s : ''})`,
+                    backgroundImage: `url(${solutionByID ? import.meta.env.VITE_API_URL_DEVELOPMENT + '/' + solutionByID.img_banner_s : ''})`,
                 }}
                 className={`${styles.category_detail__banner} `}
             >
@@ -66,7 +66,7 @@ export const CategoryDetail = () => {
                 <div className={`${styles.contents__container}`}>
                     {
                         contentsByCategory && contentsByCategory.map( content => (
-                            <ContentCard content={content} />
+                            <ContentCard key={content.id} content={content} />
                         ))
                     }
                 </div>

@@ -10,7 +10,7 @@ export const ContentCard = ({ content }: ContentCardProps) => {
     return (
         <div
             style={{
-                backgroundImage: `url(${content.img_sc})`,
+                backgroundImage: `url(${import.meta.env.VITE_API_URL_DEVELOPMENT}/${content.img_sc})`,
                 backgroundPosition: 'center'
             }}
             className={`${styles.content__card} bg-cover w-full h-[370px] rounded-3xl relative overflow-hidden`}
