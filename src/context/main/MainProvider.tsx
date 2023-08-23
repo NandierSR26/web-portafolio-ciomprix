@@ -166,7 +166,6 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         try {
             setFetching(true)
             const { data: { data } } = await contentsApi.getAllContents()
-            console.log(data)
             setContents(data)
             setFetching(false)
         } catch (error) {

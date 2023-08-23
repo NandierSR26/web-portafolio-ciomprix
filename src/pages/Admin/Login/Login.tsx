@@ -58,6 +58,7 @@ export const Login = () => {
                                     touched={touched.email}
                                     value={values.email}
                                     errors={errors.email}
+                                    className="text-white"
                                 />
 
                                 <Input
@@ -69,6 +70,7 @@ export const Login = () => {
                                     touched={touched.pass}
                                     value={values.pass}
                                     errors={errors.pass}
+                                    className="text-white"
                                 />
 
                                 <button

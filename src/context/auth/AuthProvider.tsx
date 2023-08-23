@@ -50,6 +50,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
     }
 
+    const logout = () => {
+        setAuth(null)
+        localStorage.removeItem('token')
+    }
+
     useEffect(() => {
         verifyAuth()
     }, [])
@@ -61,6 +66,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     return (
         <AuthContext.Provider value={{
             onLogin,
+            logout,
             auth,
             loading
         }}>

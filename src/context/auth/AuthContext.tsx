@@ -8,6 +8,7 @@ interface AuthContextProps {
 
     // METODOS
     onLogin: (data:ILoginData) => Promise<void>;
+    logout: () => void
 }
 
 export const AuthContext = createContext({} as AuthContextProps)

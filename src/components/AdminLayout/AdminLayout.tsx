@@ -7,6 +7,7 @@ import logoCiom from '/images/ciomprix-logo-white.svg'
 import { GrStorage } from 'react-icons/gr'
 import { MdManageSearch, MdCategory } from 'react-icons/md'
 import { useNavigate } from 'react-router-dom'
+import { useAuthContext } from '../../context/auth/AuthContext'
 
 interface AdminLayoutProps {
     children: ReactNode;
@@ -16,6 +17,7 @@ interface AdminLayoutProps {
 
 export const AdminLayout = ({ children, currentPageName, logo }: AdminLayoutProps) => {
 
+    const { logout } = useAuthContext()
     const [isOpen, setIsOpen] = useState(false)
     const navigate = useNavigate()
 
@@ -33,7 +35,11 @@ export const AdminLayout = ({ children, currentPageName, logo }: AdminLayoutProp
                         <img src={logoCiom} alt="logo" />
                     </figure>
 
-                    <FontAwesomeIcon icon={faRightFromBracket} className="text-4xl cursor-pointer text-white" />
+                    <FontAwesomeIcon 
+                        icon={faRightFromBracket} 
+                        className="text-4xl cursor-pointer text-white"
+                        onClick={logout}
+                    />
                 </div>
             </header>
 

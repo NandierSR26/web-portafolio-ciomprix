@@ -18,10 +18,10 @@ export const AppRouter = () => {
             <Route element={<PublicRoutes />}>
                 <Route path="/" element={<Landing />} />
                 <Route path="/category/:id" element={<CategoryDetail />} />
+                <Route path="/admin/login" element={<Login />} />
             </Route>
 
             <Route element={<PrivateRoutes />}>
-                <Route path="/admin/login" element={<Login />} />
                 <Route path="/admin/categories" element={<Categories />} />
                 <Route path="/admin/companies" element={<Companies />} />
                 <Route path="/admin/contents" element={<Contents />} />

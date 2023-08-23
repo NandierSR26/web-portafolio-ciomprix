@@ -23,7 +23,7 @@ export const Input = ({ type, name, placeholder, onChange, touched, errors, valu
                 placeholder={placeholder}
                 onChange={onChange}
                 value={value}
-                className="bg-transparent border-[2px] border-solid border-gray-500 rounded-lg p-2 text-base font-medium w-full text-white"
+                className={`bg-transparent border-[2px] border-solid border-gray-500 rounded-lg p-2 text-base font-medium w-full ${props.className}`}
             />
 
             {
