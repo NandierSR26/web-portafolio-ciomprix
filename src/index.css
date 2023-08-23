@@ -15,6 +15,7 @@
 
   color-scheme: light dark;
   background-color: #ffffff;
+  color: #1a1a1a;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -22,6 +23,15 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
+
+select {
+  -webkit-appearance: none;
+  /* Para navegadores webkit como Chrome y Safari */
+  -moz-appearance: none;
+  /* Para navegadores Firefox */
+  appearance: none;
+}
+
 
 a {
   font-weight: 500;
