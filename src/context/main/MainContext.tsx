@@ -26,7 +26,7 @@ interface MainContextProps {
     // METODOS
     // solutions
     getSolutions: () => Promise<void>;
-    getSolutionByID: (id:number) => Promise<void>;
+    getSolutionByID: (id:number) => Promise<ISolutions>;
     createSolution: (data:ISolutions) => Promise<void>
     updateSolution: (id:number, data:ISolutions) => Promise<void>;
     deleteSolution: (id:number) => Promise<void>;

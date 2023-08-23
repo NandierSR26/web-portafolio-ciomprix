@@ -5,6 +5,7 @@ import { useMainContext } from '../../../context'
 import { IContent } from '../../../interfaces'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus, faPencil, faPlugCirclePlus, faPlus, faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons'
+import { useNavigate } from 'react-router-dom'
 
 export const Contents = () => {
 
@@ -12,6 +13,8 @@ export const Contents = () => {
 
     const [selectedSolution, setSelectedSolution] = useState<number>(0)
     const [selectedCategory, setSelectedCategory] = useState<number>(0)
+
+    const navigate = useNavigate()
 
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         setSelectedSolution(Number(e.target.value))
@@ -39,8 +42,8 @@ export const Contents = () => {
             <div className="w-full flex gap-5 justify-between">
                 <InputSelect
                     options={solutions && solutions?.map(solution => ({
-                        value: solution.id,
-                        text: solution.tittle_s
+                        value: solution.id as number,
+                        text: solution.tittle_s as string
                     }))}
                     name={'solution'}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleSelectChange(e)}
@@ -62,7 +65,10 @@ export const Contents = () => {
                 {contentsByCategory && contentsByCategory.map(content => (
                     <div key={content.id} className="w-full flex-1 sm:max-w-md p-5 bg-white rounded-2xl shadow-xl">
                         <div className="flex justify-between w-full mb-16">
-                            <div className="p-2 bg-blue-primary rounded-lg w-10 h-10 flex justify-center items-center">
+                            <div 
+                                className="p-2 bg-blue-primary rounded-lg w-10 h-10 flex justify-center items-center"
+                                onClick={() => navigate(`/admin/edit-content/${content.id}`)}
+                            >
                                 <FontAwesomeIcon icon={faPencil} className="text-base text-white" />
                             </div>
 
@@ -81,7 +87,10 @@ export const Contents = () => {
                     </div>
                 ))}
 
-                <div className="flex flex-col items-center justify-center gap-10 w-full flex-1 sm:max-w-md p-5 bg-dark-purple rounded-2xl shadow-xl cursor-pointer">
+                <div 
+                    className="flex flex-col items-center justify-center gap-10 w-full flex-1 sm:max-w-md p-5 bg-dark-purple rounded-2xl shadow-xl cursor-pointer"
+                    onClick={() => navigate('/admin/create-content')}
+                >
                     <FontAwesomeIcon icon={faPlus} className="text-orange-500 text-7xl" />
                     <p className="text-3xl text-orange-500 font-bold">Agregar contenido</p>
                 </div>

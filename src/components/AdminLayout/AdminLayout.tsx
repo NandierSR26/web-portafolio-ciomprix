@@ -6,6 +6,7 @@ import { faBars, faBuilding, faChartLine, faClose, faRightFromBracket } from '@f
 import logoCiom from '/images/ciomprix-logo-white.svg'
 import { GrStorage } from 'react-icons/gr'
 import { MdManageSearch, MdCategory } from 'react-icons/md'
+import { useNavigate } from 'react-router-dom'
 
 interface AdminLayoutProps {
     children: ReactNode;
@@ -16,6 +17,7 @@ interface AdminLayoutProps {
 export const AdminLayout = ({ children, currentPageName, logo }: AdminLayoutProps) => {
 
     const [isOpen, setIsOpen] = useState(false)
+    const navigate = useNavigate()
 
     return (
         <div className="relative w-full min-h-screen">
@@ -64,27 +66,42 @@ export const AdminLayout = ({ children, currentPageName, logo }: AdminLayoutProp
                 <div className="w-full h-1 bg-black mb-10"></div>
 
                 <section className="flex flex-col gap-10">
-                    <div className="flex items-center gap-5 cursor-pointer">
+                    <div 
+                        className="flex items-center gap-5 cursor-pointer" 
+                        onClick={() => navigate('/admin/dashboard')}
+                    >
                         <FontAwesomeIcon icon={faChartLine} className="text-3xl text-black" />
                         <p className="text-2xl text-black font-semibold">Dashboard</p>
                     </div>
 
-                    <div className="flex items-center gap-5 cursor-pointer">
+                    <div 
+                        className="flex items-center gap-5 cursor-pointer" 
+                        onClick={() => navigate('/admin/solutions')}
+                    >
                         <MdManageSearch size={'30px'} color='black' />
                         <p className="text-2xl text-black font-semibold">Soluciones</p>
                     </div>
 
-                    <div className="flex items-center gap-5 cursor-pointer">
+                    <div 
+                        className="flex items-center gap-5 cursor-pointer" 
+                        onClick={() => navigate('/admin/categories')}
+                    >
                         <MdCategory size={'30px'} color='black' />
                         <p className="text-2xl text-black font-semibold">Categorias</p>
                     </div>
 
-                    <div className="flex items-center gap-5 cursor-pointer">
+                    <div 
+                        className="flex items-center gap-5 cursor-pointer" 
+                        onClick={() => navigate('/admin/contents')}
+                    >
                         <GrStorage size={'30px'} />
                         <p className="text-2xl text-black font-semibold">Contenidos</p>
                     </div>
 
-                    <div className="flex items-center gap-5 cursor-pointer">
+                    <div 
+                        className="flex items-center gap-5 cursor-pointer" 
+                        onClick={() => navigate('/admin/companies')}
+                    >
                         <FontAwesomeIcon icon={faBuilding} className="text-3xl text-black" />
                         <p className="text-2xl text-black font-semibold">Compañias</p>
                     </div>

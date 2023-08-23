@@ -1,14 +1,14 @@
 import { text } from '@fortawesome/fontawesome-svg-core'
 import React from 'react'
 
-interface InputProps extends Partial<HTMLInputElement> {
+interface InputProps extends Partial<HTMLTextAreaElement> {
     onChange: any;
     touched: any;
     errors: any;
     label: string;
 }
 
-export const Input = ({ type, name, placeholder, onChange, touched, errors, value, label, ...props }: InputProps) => {
+export const Textarea = ({ type, name, placeholder, onChange, touched, errors, value, label, ...props }: InputProps) => {
     return (
         <div className="flex flex-col gap-1 min-w-0 mb-3">
             <label 
@@ -17,13 +17,13 @@ export const Input = ({ type, name, placeholder, onChange, touched, errors, valu
             >
                 { label }
             </label>
-            <input
-                type={type}
+            <textarea
                 name={name}
                 placeholder={placeholder}
                 onChange={onChange}
                 value={value}
-                className="bg-transparent border-[2px] border-solid border-gray-500 rounded-lg p-2 text-base font-medium w-full"
+                className="bg-transparent border-[2px] border-solid border-gray-500 rounded-lg p-2 text-base font-medium w-full h-48"
+
             />
 
             {

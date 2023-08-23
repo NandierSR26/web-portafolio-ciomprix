@@ -39,14 +39,16 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         }
     }
 
-    const getSolutionByID = async (id: number) => {
+    const getSolutionByID = async (id: number): Promise<ISolutions> => {
         try {
             setFetching(true)
             const { data: { data } } = await solutionsApi.getSolutionById(id)
             setSolutionByID(data)
             setFetching(false)
+            return data
         } catch (error) {
             console.log(error)
+            return {}
         }
     }
 
