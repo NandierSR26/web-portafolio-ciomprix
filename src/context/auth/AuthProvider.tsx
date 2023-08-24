@@ -59,10 +59,6 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         verifyAuth()
     }, [])
 
-    useEffect(() => {
-        console.log(auth)
-    }, [auth])
-
     return (
         <AuthContext.Provider value={{
             onLogin,

@@ -7,7 +7,7 @@ interface MainContextProps {
 
     // soluciones
     solutions: ISolutions[];
-    solutionByID: ISolutions;
+    solutionByID: ISolutions | undefined;
 
     // categorias
     categories: ICategory[];

@@ -7,38 +7,50 @@ import { useNavigate } from 'react-router-dom'
 
 export const Solutions = () => {
 
-    const { solutions } = useMainContext()
+    const { solutions, deleteSolution } = useMainContext()
     const navigate = useNavigate()
+
+    const handleDeleteSolution = (id_solution: number) => {
+        deleteSolution(id_solution)
+            .then(solution => {
+                console.log(solution)
+            })
+    }
 
     return (
         <AdminLayout logo={false} currentPageName='Administrador de soluciónes'>
-            <div className="flex justify-start flex-wrap gap-10">
+            <div className="flex justify-center flex-wrap gap-10 mb-20">
                 {solutions.map(solution => (
-                    <div key={solution.id} className="w-full flex-1 sm:max-w-md p-5 bg-white rounded-2xl shadow-xl">
+                    <div key={solution.id} className="flex flex-col justify-between w-full min-w-[350px] flex-1 sm:max-w-md p-5 bg-white rounded-2xl shadow-xl">
                         <div className="flex justify-between w-full mb-16">
-                            <div 
-                                className="p-2 bg-blue-primary rounded-lg w-10 h-10 flex justify-center items-center"
+                            <div
+                                className="p-2 bg-blue-primary rounded-lg w-10 h-10 flex justify-center items-center cursor-pointer"
                                 onClick={() => navigate(`/admin/edit-solution/${solution.id}`)}
                             >
                                 <FontAwesomeIcon icon={faPencil} className="text-base text-white" />
                             </div>
 
-                            <div className="p-2 bg-red-500 rounded-lg w-10 h-10 flex justify-center items-center">
+                            <div
+                                className="p-2 bg-red-500 rounded-lg w-10 h-10 flex justify-center items-center cursor-pointer"
+                                onClick={() => handleDeleteSolution(solution.id as number)}
+                            >
                                 <FontAwesomeIcon icon={faTrash} className="text-base text-white" />
                             </div>
                         </div>
 
-                        <h4 className="text-3xl font-bold text-center mb-10">{solution.tittle_s}</h4>
+                        <div>
+                            <h4 className="text-3xl font-bold text-center mb-10">{solution.tittle_s}</h4>
 
-                        <div className="flex justify-center items-center gap-5">
-                            <span className="text-lg font-bold px-3 cursor-pointer">Activar</span>
-                            <span className="text-lg font-bold px-3 cursor-pointer">Desactivar</span>
-                            <span className="block w-5 h-5 bg-green-500 rounded-full"></span>
+                            <div className="flex justify-center items-center gap-5">
+                                <span className="text-lg font-bold px-3 cursor-pointer">Activar</span>
+                                <span className="text-lg font-bold px-3 cursor-pointer">Desactivar</span>
+                                <span className="block w-5 h-5 bg-green-500 rounded-full"></span>
+                            </div>
                         </div>
                     </div>
                 ))}
-                <div 
-                    className="flex flex-col items-center justify-center gap-10 w-full flex-1 sm:max-w-md p-5 bg-dark-purple rounded-2xl shadow-xl cursor-pointer"
+                <div
+                    className="flex flex-col items-center justify-center gap-10 w-full flex-1 sm:max-w-md min-w-[350px] px-5 py-10 bg-dark-purple rounded-2xl shadow-xl cursor-pointer"
                     onClick={() => navigate('/admin/create-solution')}
                 >
                     <FontAwesomeIcon icon={faPlus} className="text-orange-500 text-7xl" />

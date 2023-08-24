@@ -14,7 +14,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     const [fetching, setFetching] = useState(true)
 
     const [solutions, setSolutions] = useState<ISolutions[]>([])
-    const [solutionByID, setSolutionByID] = useState<ISolutions>({} as ISolutions)
+    const [solutionByID, setSolutionByID] = useState<ISolutions>()
 
     const [categories, setCategories] = useState<ICategory[]>([])
     const [categoryByID, setCategoryById] = useState<ICategory>({} as ICategory)
@@ -53,10 +53,12 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     }
 
     const createSolution = async (dataValues: ISolutions) => {
+        
         try {
             setFetching(true)
             const { data: { data } } = await solutionsApi.createSolution(dataValues)
             console.log(data)
+            setSolutions([...solutions, data])
             setFetching(false)
         } catch (error) {
             console.log(error)
@@ -64,10 +66,19 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     }
 
     const updateSolution = async (id: number, dataValues: ISolutions) => {
+        setSolutionByID({} as ISolutions)
         try {
             setFetching(true)
             const { data: { data } } = await solutionsApi.updateSolution(id, dataValues)
-            console.log(data)
+
+            // actualizar el arreglo de soluciones
+            const index = solutions.findIndex(solution => solution.id  === data.id)
+            if(index === -1) return
+            solutions[index] = data
+
+            // actualizar en el estado la solucion n¿con los nuevos datos
+            setSolutionByID(data)
+
             setFetching(false)
         } catch (error) {
             console.log(error)
