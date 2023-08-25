@@ -5,18 +5,21 @@ interface InputProps extends Partial<HTMLInputElement> {
     onChange: any;
     touched: any;
     errors: any;
-    label: string;
+    label?: string;
 }
 
 export const Input = ({ type, name, placeholder, onChange, touched, errors, value, label, ...props }: InputProps) => {
     return (
-        <div className="flex flex-col gap-1 min-w-0 mb-3">
-            <label 
-                className="text-lg font-bold"
-                htmlFor={name}
-            >
-                { label }
-            </label>
+        <div className="flex flex-col gap-1 min-w-0">
+            {label && (
+                <label
+                    className="text-lg font-bold"
+                    htmlFor={name}
+                >
+                    {label}
+                </label>
+            )}
+
             <input
                 type={type}
                 name={name}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { AdminLayout } from '../../../components'
+import { AdminCard, AdminLayout } from '../../../components'
 import { InputSelect } from '../../../components/InputSelect'
 import { useMainContext } from '../../../context'
 import { IContent } from '../../../interfaces'
@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom'
 
 export const Contents = () => {
 
-    const { solutions, categoriesBySolution, getCategoryByIdSolution, getContentByCategory, contentsByCategory } = useMainContext()
+    const { solutions, categoriesBySolution, getCategoryByIdSolution, getContentByCategory, contentsByCategory, deleteContent, fetching, setFetching } = useMainContext()
 
     const [selectedSolution, setSelectedSolution] = useState<number>(0)
     const [selectedCategory, setSelectedCategory] = useState<number>(0)
@@ -24,18 +24,59 @@ export const Contents = () => {
         setSelectedCategory(Number(e.target.value))
     }
 
+    const handleDeleteContent = (id_content: number): void => {
+        deleteContent(id_content)
+            .then(contents => {
+                setFetching(false)
+                console.log(contents)
+            })
+    }
+
+    useEffect(() => {
+        if (!solutions.length) return
+
+        if (localStorage.getItem('last-selected-solution-[contents-page]')) {
+            const lastSelectedSolution = JSON.parse(localStorage.getItem('last-selected-solution-[contents-page]') as string)
+            setSelectedSolution(lastSelectedSolution.id)
+
+            return
+        }
+
+        setSelectedSolution(solutions[0].id as number)
+    }, [solutions])
+
+    useEffect(() => {
+        if (!categoriesBySolution.length) return
+
+        if (localStorage.getItem('last-selected-category-[contents-page]')) {
+            const lastSelectedCategory = JSON.parse(localStorage.getItem('last-selected-category-[contents-page]') as string)
+            setSelectedCategory(lastSelectedCategory.id)
+
+            return
+        }
+
+        setSelectedCategory(categoriesBySolution[0].id as number)
+    }, [categoriesBySolution])
+
     useEffect(() => {
         if (!selectedSolution) return
+
+        localStorage.setItem('last-selected-solution-[contents-page]', JSON.stringify({ id: selectedSolution }))
+
         getCategoryByIdSolution(selectedSolution)
-            .then(categories => { })
+            .then(categories => setFetching(false))
     }, [selectedSolution])
 
     useEffect(() => {
         if (!selectedCategory) return
+
+        localStorage.setItem('last-selected-category-[contents-page]', JSON.stringify({ id: selectedCategory }))
         getContentByCategory(selectedCategory)
+            .then(contents => setFetching(false))
     }, [selectedCategory])
 
-    console.log(contentsByCategory)
+    if (fetching) return <h1>Cargando...</h1>
+
 
     return (
         <AdminLayout logo={false} currentPageName='Administrador de contenidos'>
@@ -47,7 +88,7 @@ export const Contents = () => {
                     }))}
                     name={'solution'}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleSelectChange(e)}
-                    value={selectedSolution}
+                    value={selectedSolution ? selectedSolution : solutions[0].id}
                 />
 
                 <InputSelect
@@ -57,37 +98,23 @@ export const Contents = () => {
                     }))}
                     name={'category'}
                     onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleSelectCategories(e)}
-                    value={selectedCategory}
+                    value={selectedCategory ? selectedCategory : categoriesBySolution[0]?.id}
                 />
             </div>
 
             <section className="flex justify-start flex-wrap gap-10 my-10">
                 {contentsByCategory && contentsByCategory.map(content => (
-                    <div key={content.id} className="w-full flex-1 sm:max-w-md p-5 bg-white rounded-2xl shadow-xl">
-                        <div className="flex justify-between w-full mb-16">
-                            <div 
-                                className="p-2 bg-blue-primary rounded-lg w-10 h-10 flex justify-center items-center"
-                                onClick={() => navigate(`/admin/edit-content/${content.id}`)}
-                            >
-                                <FontAwesomeIcon icon={faPencil} className="text-base text-white" />
-                            </div>
-
-                            <div className="p-2 bg-red-500 rounded-lg w-10 h-10 flex justify-center items-center">
-                                <FontAwesomeIcon icon={faTrash} className="text-base text-white" />
-                            </div>
-                        </div>
-
-                        <h4 className="text-3xl font-bold text-center mb-10">{content.tittle_sc}</h4>
-
-                        <div className="flex justify-center items-center gap-5">
-                            <span className="text-lg font-bold px-3 cursor-pointer">Activar</span>
-                            <span className="text-lg font-bold px-3 cursor-pointer">Desactivar</span>
-                            <span className="block w-5 h-5 bg-green-500 rounded-full"></span>
-                        </div>
-                    </div>
+                    <AdminCard
+                        key={content.id}
+                        id={content.id}
+                        title={content.tittle_sc}
+                        status={content.active_sc}
+                        type='content'
+                        deleteElement={handleDeleteContent}
+                    />
                 ))}
 
-                <div 
+                <div
                     className="flex flex-col items-center justify-center gap-10 w-full flex-1 sm:max-w-md p-5 bg-dark-purple rounded-2xl shadow-xl cursor-pointer"
                     onClick={() => navigate('/admin/create-content')}
                 >

@@ -45,8 +45,8 @@ interface MainContextProps {
     getContents: () => Promise<void>
     getContentByID: (id:number) => Promise<void>
     getContentByCategory: (id_category:number) => Promise<void>
-    createContent: (data:IContent) => Promise<void>
-    updateContent: (id:number, data:IContent) => Promise<void>
+    createContent: (data:FormData) => Promise<void>
+    updateContent: (id:number, data:FormData) => Promise<void>
     deleteContent: (id:number) => Promise<void>
 
     // empresas

@@ -69,7 +69,7 @@ export const InputSelect: FC<Props> = ({ label, name, onChange, value, touched, 
                     {
                         options && options.map((option: IOptionSelect) => (
                             <option
-                                key={option.text}
+                                key={option.value}
                                 value={option.value}
                             >
                                 {option.text}

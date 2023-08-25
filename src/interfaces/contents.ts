@@ -8,4 +8,5 @@ export interface IContent {
     id_c: number;
     date_create: number;
     date_update: number;
+    vid_sc_origin: number;
 }

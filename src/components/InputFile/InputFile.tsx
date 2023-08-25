@@ -5,7 +5,7 @@ interface InputFileProps extends Partial<HTMLInputElement> {
     image: FormImage | null;
     error: string | null;
     onChange: any;
-    label: string;
+    label?: string;
 }
 
 export const InputFile = ({ image, error, onChange, name, label }: InputFileProps) => {
@@ -13,7 +13,9 @@ export const InputFile = ({ image, error, onChange, name, label }: InputFileProp
 
     return (
         <div className="flex flex-col gap-1">
-            <label htmlFor={name} className="text-lg font-bold">{ label }</label>
+            {label && (
+                <label htmlFor={name} className="text-lg font-bold">{ label }</label>
+            )}
 
             <div
                 className={`relative border-[2px] border-dashed rounded-lg border-gray-500 w-full h-40 p-5 flex flex-col items-center justify-center bg-gray-200 ${image?.file && 'bg-green-200 '}`}

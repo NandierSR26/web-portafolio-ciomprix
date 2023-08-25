@@ -32,6 +32,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         try {
             const { data: { data } } = await solutionsApi.getAllSolutions()
             setSolutions(data)
+            setFetching(false)
         } catch (error) {
             console.log(error)
         }
@@ -179,19 +180,27 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         }
     }
 
-    const createContent = async (dataValues: IContent) => {
+    const createContent = async (dataValues: FormData) => {
         try {
             const { data: { data } } = await contentsApi.createContent(dataValues)
             console.log(data)
+            setContentsByCategory([...contentsByCategory, data])
         } catch (error) {
             console.log(error);
         }
     }
 
-    const updateContent = async (id: number, dataValues: IContent) => {
+    const updateContent = async (id: number, dataValues: FormData) => {
         try {
             const { data: { data } } = await contentsApi.updateContent(id, dataValues)
             console.log(data)
+
+            const index = contentsByCategory.findIndex(content => content.id === data.id)
+            if(index === -1) return
+            contentsByCategory[index] = data
+
+            setContentsByID(data)
+
         } catch (error) {
             console.log(error);
         }

@@ -38,7 +38,6 @@ export const Categories = () => {
 
         setSelectedSolution(solutions[0].id as number)
 
-
     }, [solutions])
 
     useEffect(() => {
