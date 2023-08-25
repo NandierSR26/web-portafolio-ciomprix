@@ -12,7 +12,7 @@ export const InputFile = ({ image, error, onChange, name, label }: InputFileProp
 
 
     return (
-        <div className="flex flex-col gap-q">
+        <div className="flex flex-col gap-1">
             <label htmlFor={name} className="text-lg font-bold">{ label }</label>
 
             <div
@@ -39,7 +39,7 @@ export const InputFile = ({ image, error, onChange, name, label }: InputFileProp
 
             {
                 (error)
-                && <span className="text-white bg-red-500 text-sm text-center py-1 rounded-3xl font-semibold w-full mt-1">{error}</span>
+                && <span className="text-white bg-red-500 text-sm text-center py-1 rounded-md font-semibold w-full mt-1">{error}</span>
             }
         </div>
     )

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { AdminLayout } from '../../../components'
+import { AdminCard, AdminLayout } from '../../../components'
 import { ICategory, ISolutions } from '../../../interfaces'
 import { useMainContext } from '../../../context'
 import { InputSelect } from '../../../components/InputSelect'
@@ -9,9 +9,9 @@ import { useNavigate } from 'react-router-dom'
 
 export const Categories = () => {
 
-    const { solutions, categories, getCategoryByIdSolution } = useMainContext()
+    const { solutions, getCategoryByIdSolution, deleteCategory, categoriesBySolution, fetching, setFetching } = useMainContext()
     const [selectedSolution, setSelectedSolution] = useState<number>(0)
-    const [categoriesBySolution, setCategoriesBySolution] = useState<ICategory[]>([])
+    // const [categoriesBySolution, setCategoriesBySolution] = useState<ICategory[]>([])
 
     const navigate = useNavigate()
 
@@ -19,15 +19,41 @@ export const Categories = () => {
         setSelectedSolution(Number(e.target.value))
     }
 
+    const handleDeleteCategory = (id_category: number): void => {
+        deleteCategory(id_category)
+            .then(category => {
+                console.log(category)
+            })
+    }
+
+    useEffect(() => {
+        if (!solutions.length) return
+
+        if (localStorage.getItem('last-selected-solution')) {
+            const lastSelectedSolution = JSON.parse(localStorage.getItem('last-selected-solution') as string)
+            setSelectedSolution(lastSelectedSolution.id)
+
+            return
+        }
+
+        setSelectedSolution(solutions[0].id as number)
+
+
+    }, [solutions])
 
     useEffect(() => {
         if (!selectedSolution) return
+
+        localStorage.setItem('last-selected-solution', JSON.stringify({ id: selectedSolution }))
         getCategoryByIdSolution(selectedSolution)
-            .then(categories => setCategoriesBySolution(categories))
+            .then(categories => setFetching(false))
+            .catch(error => setFetching(false))
     }, [selectedSolution])
 
+    console.log(fetching)
 
-    if (!solutions.length) return
+
+    if (!solutions.length || fetching ) return <h1>Cargando...</h1>
 
     return (
         <AdminLayout logo={false} currentPageName='Administrador de categorias'>
@@ -38,39 +64,22 @@ export const Categories = () => {
                 }))}
                 name={'solution'}
                 onChange={(e: React.ChangeEvent<HTMLSelectElement>) => handleSelectChange(e)}
-                value={selectedSolution}
+                value={selectedSolution ? selectedSolution : solutions[0].id}
             />
 
-            <section className="flex justify-start flex-wrap gap-10 my-10">
+            <section className="flex justify-center flex-wrap gap-10 mb-20 mt-10">
                 {categoriesBySolution && categoriesBySolution.map(category => (
-                    <div 
-                        key={category.id} 
-                        className="w-full flex-1 sm:max-w-md p-5 bg-white rounded-2xl shadow-xl"
-                    >
-                        <div className="flex justify-between w-full mb-16">
-                            <div 
-                                className="p-2 bg-blue-primary rounded-lg w-10 h-10 flex justify-center items-center"
-                                onClick={() => navigate(`/admin/edit-category/${category.id}`)}
-                            >
-                                <FontAwesomeIcon icon={faPencil} className="text-base text-white" />
-                            </div>
-
-                            <div className="p-2 bg-red-500 rounded-lg w-10 h-10 flex justify-center items-center">
-                                <FontAwesomeIcon icon={faTrash} className="text-base text-white" />
-                            </div>
-                        </div>
-
-                        <h4 className="text-3xl font-bold text-center mb-10">{category.tittle_c}</h4>
-
-                        <div className="flex justify-center items-center gap-5">
-                            <span className="text-lg font-bold px-3 cursor-pointer">Activar</span>
-                            <span className="text-lg font-bold px-3 cursor-pointer">Desactivar</span>
-                            <span className="block w-5 h-5 bg-green-500 rounded-full"></span>
-                        </div>
-                    </div>
+                    <AdminCard
+                        key={category.id}
+                        id={category.id}
+                        title={category.tittle_c}
+                        status={category.active_c}
+                        type='category'
+                        deleteElement={handleDeleteCategory}
+                    />
                 ))}
 
-                <div 
+                <div
                     className="flex flex-col items-center justify-center gap-10 w-full flex-1 sm:max-w-md p-5 bg-dark-purple rounded-2xl shadow-xl cursor-pointer"
                     onClick={() => navigate('/admin/create-category')}
                 >

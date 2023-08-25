@@ -7,8 +7,8 @@ export default function Action(api:AxiosInstance) {
         getAllCategories: () => api.get<ApiResponse>('/categories'),
         getCategoryById: (id:number) => api.get<ApiResponse>(`/category/${id}`),
         getCategoryByIdSolution: (id:number) => api.get<ApiResponse>(`/categoriesBySolution/${id}`),
-        createCategory: (data:ICategory) => api.post<ApiResponse>('/create-category', data),
-        updateCategory: (id:number, data:ICategory) => api.put<ApiResponse>(`/update-category/${id}`, data),
+        createCategory: (data:FormData) => api.post<ApiResponse>('/create-category', data),
+        updateCategory: (id:number, data:FormData) => api.put<ApiResponse>(`/update-category/${id}`, data),
         deleteCategory: (id:number) => api.delete<ApiResponse>(`/delete-category/${id}`)
     }
 }

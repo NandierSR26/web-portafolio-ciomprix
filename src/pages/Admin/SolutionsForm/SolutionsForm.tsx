@@ -1,17 +1,13 @@
-import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
+import React, { ChangeEvent, useEffect, useState } from 'react'
 import { AdminLayout, Input, InputFile, Textarea } from '../../../components'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
-import { Formik, FormikProps } from 'formik'
+import { Formik } from 'formik'
+import * as Yup from 'yup'
+
 import { useMainContext } from '../../../context'
 import { ISolutions } from '../../../interfaces'
 import { FormImage } from '../../../interfaces/others'
-import * as Yup from 'yup'
-
-
-enum FormPurpose {
-    EDITION = "form-edition",
-    CREATION = "form-creation"
-}
+import { FormPurpose } from '../../../utils/enums'
 
 interface FormValues {
     tittle_s?: string,
@@ -28,7 +24,6 @@ export const SolutionsForm = () => {
 
 
     const [formPurpose, setFormPurpose] = useState<FormPurpose>()
-    // const [solutionByID, setSolutionByID] = useState<ISolutions | null>(null)
 
     const [solutionImg, setSolutionImg] = useState<FormImage | null>(null)
     const [solutionImgError, setSolutionImgError] = useState<string | null>(null)
@@ -120,7 +115,7 @@ export const SolutionsForm = () => {
                             description_s: Yup.string().required('Dato requerido')
                         })
                     }
-                    onSubmit={({ tittle_s, description_s, active_s }) => {
+                    onSubmit={({ tittle_s, description_s }) => {
                         if (formPurpose === FormPurpose.CREATION) {
 
                             if (!solutionImg || !solutionBanner) {

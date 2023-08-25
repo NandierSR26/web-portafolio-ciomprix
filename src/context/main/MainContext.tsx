@@ -24,6 +24,8 @@ interface MainContextProps {
     companyByID: ICompany;
 
     // METODOS
+    setFetching: React.Dispatch<React.SetStateAction<boolean>>;
+
     // solutions
     getSolutions: () => Promise<void>;
     getSolutionByID: (id:number) => Promise<ISolutions>;
@@ -35,8 +37,8 @@ interface MainContextProps {
     getCategories: () => Promise<void>;
     getCategoryById: (id:number) => Promise<void>;
     getCategoryByIdSolution: (id:number) => Promise<ICategory[]>;
-    createCategory: (data:ICategory) => Promise<void>;
-    updateCategory: (id:number, data:ICategory) => Promise<void>;
+    createCategory: (data:FormData) => Promise<void>;
+    updateCategory: (id:number, data:FormData) => Promise<void>;
     deleteCategory: (id:number) => Promise<void>;
 
     // contenidos

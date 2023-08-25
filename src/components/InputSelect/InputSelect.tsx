@@ -46,17 +46,17 @@ export const InputSelect: FC<Props> = ({ label, name, onChange, value, touched, 
     };
 
     return (
-        <div className={`flex flex-col items-start justify-start w-full ${className && className}`}>
+        <div className={`flex flex-col gap-1 min-w-0 items-start justify-start w-full`}>
             {
                 label && <label
                     htmlFor={name}
-                    className="text-[15px] text-[#5C5C5C] font-light px-1 mb-[2px]"
+                    className="text-lg font-bold"
                 >
                     {label}
                 </label>
             }
 
-            <div className="flex items-center bg-[#D2D2D2] justify-start w-full bg-grey-200 h-[46px] rounded-3xl pr-3 mb-[2px]">
+            <div className={`flex items-center bg-[#D2D2D2] justify-start w-full bg-grey-200 h-[46px] rounded-3xl pr-3 mb-[2px] ${className && className} `}>
                 <select
                     className={`${styles.input__select} flex-1 h-[46px] text-sm text-grey-700 font-medium py-2 px-3 rounded-3xl outline-none bg-inherit min-w-0 cursor-pointer`}
                     name={name}
@@ -84,7 +84,7 @@ export const InputSelect: FC<Props> = ({ label, name, onChange, value, touched, 
             </div>
             {
                 (errors && touched)
-                && <span className="text-white bg-pink-500 text-sm text-center py-1 rounded-3xl font-semibold w-full mt-1">{errors}</span>
+                && <span className="text-white bg-red-500 text-sm text-center py-1 rounded-md font-semibold w-full mt-1">{errors}</span>
             }
         </div>
     )

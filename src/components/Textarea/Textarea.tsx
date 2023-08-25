@@ -28,7 +28,7 @@ export const Textarea = ({ type, name, placeholder, onChange, touched, errors, v
 
             {
                 (errors && touched)
-                && <span className="text-white bg-red-500 text-sm text-center py-1 rounded-3xl font-semibold w-full mt-1">{errors}</span>
+                && <span className="text-white bg-red-500 text-sm text-center py-1 rounded-md font-semibold w-full mt-1">{errors}</span>
             }
         </div>
     )
