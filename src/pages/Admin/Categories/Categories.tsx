@@ -6,6 +6,8 @@ import { InputSelect } from '../../../components/InputSelect'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import toast from 'react-hot-toast'
 
 export const Categories = () => {
 
@@ -20,10 +22,23 @@ export const Categories = () => {
     }
 
     const handleDeleteCategory = (id_category: number): void => {
-        deleteCategory(id_category)
-            .then(category => {
-                console.log(category)
-            })
+        Swal.fire({
+            title: 'Esta seguro?',
+            text: "Esta accion no se puede deshacer!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteCategory(id_category)
+                    .then(category => {
+                        toast.success('Categoria eliminada')
+                    })
+            }
+        })
     }
 
     useEffect(() => {
@@ -49,10 +64,7 @@ export const Categories = () => {
             .catch(error => setFetching(false))
     }, [selectedSolution])
 
-    console.log(fetching)
-
-
-    if (!solutions.length || fetching ) return <h1>Cargando...</h1>
+    if (!solutions.length || fetching) return <h1>Cargando...</h1>
 
     return (
         <AdminLayout logo={false} currentPageName='Administrador de categorias'>

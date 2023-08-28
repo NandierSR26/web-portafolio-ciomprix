@@ -65,18 +65,18 @@ export const CompaniesForm = () => {
     }, [companyImg])
 
     if (!formPurpose) return <h1>Cargando...</h1>
+    if(formPurpose === FormPurpose.EDITION && !companyByID.id) return <h1>Cargando...</h1>
     if (fetching) return <h1>Cargando...</h1>
-    if(formPurpose === FormPurpose.EDITION && !companyByID) return <h1>Cargando...</h1>
 
     return (
         <AdminLayout logo={false} currentPageName={formPurpose === FormPurpose.CREATION ? 'Nueva empresa' : 'Editar empresa'}>
             <Formik
                 initialValues={{
-                    name: companyByID?.name ? companyByID?.name : '',
-                    alias: companyByID?.alias ? companyByID?.alias : '',
-                    color1: companyByID?.color1 ? companyByID?.color1 : '#000000',
-                    color2: companyByID?.color2 ? companyByID?.color2 : '#000000',
-                    active: companyByID?.active ? companyByID?.active : '',
+                    name: companyByID.name ? companyByID.name : '',
+                    alias: companyByID.alias ? companyByID.alias : '',
+                    color1: companyByID.color1 ? companyByID.color1 : '#000000',
+                    color2: companyByID.color2 ? companyByID.color2 : '#000000',
+                    active: companyByID.active ? companyByID.active : '',
                 }}
                 validationSchema={
                     Yup.object({
@@ -190,7 +190,7 @@ export const CompaniesForm = () => {
                                 className={`text-xl font-semibold text-black px-10 py-2 rounded-full cursor-pointer ${!isToggleActive && 'bg-red-500 text-white'}`}
                                 onClick={() => setIsToggleActive(false)}
                             >
-                                Desactiva
+                                Inactiva
                             </div>
                         </div>
 

@@ -110,7 +110,7 @@ export const UsersForm = () => {
                                 className={`text-xl font-semibold text-black px-10 py-2 rounded-full cursor-pointer ${!isToggleActive && 'bg-red-500 text-white'}`}
                                 onClick={() => setIsToggleActive(false)}
                             >
-                                Desactivo
+                                Inactivo
                             </div>
                         </div>
 

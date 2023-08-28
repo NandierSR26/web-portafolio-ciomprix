@@ -5,6 +5,7 @@ import App from './App'
 import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './context/auth/AuthProvider'
+import { Toaster } from 'react-hot-toast'
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -12,6 +13,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <AuthProvider>
         <MainProvider>
           <App />
+          <Toaster />
         </MainProvider>
       </AuthProvider>
     </BrowserRouter>

@@ -46,7 +46,7 @@ export const AdminCard = ({ id, title, status, type, deleteElement }: AdminCardP
                     {
                         status === 0 ? (
                             <>
-                                <span className="text-lg font-bold px-3 cursor-pointer">Desactivo</span>
+                                <span className="text-lg font-bold px-3 cursor-pointer">Inactivo</span>
                                 <span className="w-5 h-5 bg-red-500 rounded-full flex-shrink-0"></span>
                             </>
                         ) : (

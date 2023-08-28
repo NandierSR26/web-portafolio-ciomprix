@@ -14,12 +14,12 @@ export const Dashboard = () => {
 
     return (
         <AdminLayout logo currentPageName='Dashboard'>
-            <h2 className="text-3xl font-bold text-black text-center mb-5">Estadisticas</h2>
+            <h2 className="text-3xl font-bold text-black text-center mb-5">Estadísticas</h2>
 
             <div className="flex justify-evenly flex-wrap gap-10">
                 <div className="flex flex-col items-center w-full sm:w-fit border-[2px] border-gray-500 rounded-2xl p-5">
                     <h4 className="text-2xl text-black font-bold mb-3">{solutions.length}</h4>
-                    <p className="text-black text-xl font-medium">Soluciones</p>
+                    <p className="text-black text-xl font-medium">Soluciónes</p>
                 </div>
 
                 <div className="flex flex-col items-center w-full sm:w-fit border-[2px] border-gray-500 rounded-2xl p-5">

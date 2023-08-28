@@ -7,123 +7,89 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import { identifyDevice } from '../../utils/deviceIdentify';
 
 import styles from './CarouselSection.module.scss'
+import { useNavigate } from 'react-router-dom';
 
 interface CarouselSectionProps {
-    children: ReactNode;
-    title: string;
-    element: ISolutions[];
-    className?: string;
+    title: string
+    className?: string
+    element: ISolutions
+    children: ReactNode
 }
 
-export const CarouselSection = ({ children, title, element, className }: CarouselSectionProps) => {
+export const CarouselSection = ({ children, title, className, element }: CarouselSectionProps) => {
 
-    const { width } = useScreenSize()
+    const navigate = useNavigate()
+    const [isHoverCarousel, setIsHoverCarousel] = useState<boolean>()
+    const [widthScreen, setWidthScreen] = useState(window.innerWidth)
+    const [isDown, setIsDown] = useState(false);
+    const [startX, setStartX] = useState(0);
+    const [scrollLeft, setScrollLeft] = useState(0);
+    const carouselRef = useRef<HTMLDivElement | null>(null)
 
-    //Define el ancho de los elementos contenidos
-    const [widthItems, setWidthItems] = useState(0)
+    const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+        setIsDown(true);
+        setStartX(e.pageX - carouselRef.current!.offsetLeft);
+        setScrollLeft(carouselRef.current!.scrollLeft);
+    };
 
-    //Identifica el elemento que se esta mostrando
-    const [item, setItem] = useState(0)
+    const handleMouseLeave = () => {
+        setIsHoverCarousel(false)
+        setIsDown(false);
+    };
 
-    //Limitante de movimiento
-    const [lim, setLim] = useState(0)
+    const handleMouseUp = () => {
+        setIsDown(false);
+    };
 
-    //Obtine el ancho de la grid que contiene los elementos del carusel
-    const widthUsableRef = useRef<HTMLDivElement>(null)
+    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+        if (!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - carouselRef.current!.offsetLeft;
+        const walk = x - startX;
+        carouselRef.current!.scrollLeft = scrollLeft - walk;
+    };
 
-    //if(element!=undefined)console.log(element.length)
-    let jump: number = 1;
-    let xInit: number, yInit: number
+    const handleScroll = (event: React.WheelEvent<HTMLDivElement>) => {
+        if (!isHoverCarousel) return
+        if (widthScreen < 1060) {
+            console.log('hay scroll con mouse de mano')
+            return
+        }
 
-    //Funciones de movimiento
-    const clickLeft = () => {
-        if (item > 0) {
-            if (item < 1) setItem(0)
-            else setItem(item - 1)
+        if (event.deltaY < 0) {
+            carouselRef.current!.scrollLeft += 20
+        } else if (event.deltaY > 0) {
+            carouselRef.current!.scrollLeft -= 20
         }
     }
 
-    const clickRight = () => {
-        if (lim - item < 1) setItem(item + (lim - item))
-        else setItem(item + 1)
-    }
-
-    //Controles touch
-    const handleTouchStart = (e: any) => {
-        [...e.changedTouches].map(touch => {
-            xInit = touch.pageX
-            yInit = touch.pageY
-        })
-    }
-
-    const handleTouchMove = (e: any) => {
-        [...e.changedTouches].map(touch => {
-            if (touch.pageY < yInit + 10 && touch.pageY > yInit - 10) {
-                if (touch.pageX < (xInit - 50) && item < lim) {
-                    if (lim - item < 1) setItem(item + (lim - item))
-                    else setItem(item + 1)
-                }
-                else if (touch.pageX > (xInit + 50) && item > 0) {
-                    if (item < 1) setItem(0)
-                    else setItem(item - 1)
-                }
-            }
-        })
-    }
-
-    //Calibracion responsivo
-    if (width < 640 && jump != 1) jump = 1
-    else if (width < 768 && jump != 1) jump = (2)
-    else if (width < 1024 && jump != 1) jump = (3)
-    else if (jump != 4) jump = (4)
-
     useEffect(() => {
-        if (widthUsableRef.current) setWidthItems(((widthUsableRef.current.offsetWidth - (16 * (jump - 1))) / jump))
-        if (element != undefined) {
-            setLim((element.length - jump > 0) ? element.length - jump : 0)
+        function handleResize() {
+            setWidthScreen(window.innerWidth);
         }
-    }, [])
 
-    useEffect(() => {
-        setItem(Number((item > 0) && item - 1))
-    }, [jump])
+        window.addEventListener('resize', handleResize);
 
-    // console.log(element.length)
-
-    if (!element) return null
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     return (
-        <section className={`w-full px-7 md:px-28 max-w-[1500px] my-24 mx-auto text-black ${className}`} ref={widthUsableRef}>
+        <section className={`w-full px-7 md:px-28 max-w-[1500px] my-24 mx-auto text-black ${className}`} id={`section-${element.id}`}>
             <h3 className='text-3xl lg:text-4xl font-medium'>{title}</h3>
-            {(element.length > jump && identifyDevice() === "computer"/*Identificador de dispositivo*/) &&
-                <div className={`flex flex-row flex-nowrap justify-end my-1 h-8`}>
-                    <>
-                        <button
-                            className='px-3 mr-2 rounded bg-gray-500 text-white transition-all active:bg-gray-400'
-                            onClick={clickLeft}
-                        >
-                            <FontAwesomeIcon icon={faChevronLeft} />
-                        </button>
-                        <button
-                            className='px-3 rounded bg-gray-500 text-white transition-all active:bg-gray-400'
-                            onClick={clickRight}
-                        >
-                            <FontAwesomeIcon icon={faChevronRight} />
-                        </button>
-                    </>
-                </div>
-            }
+
             <hr className='border-black my-4' />
-            {widthUsableRef.current != undefined &&
-                <ul
-                    className={`${styles.carousel__items__container}`}
-                    style={{ left: `${-item * ((widthItems + 16))}px`, gridTemplateColumns: `repeat(${element.length},${widthItems}px)` }}
-                    onTouchMoveCapture={(e) => handleTouchMove(e)}
-                    onTouchStartCapture={(e) => handleTouchStart(e)}
-                >
-                    {children}
-                </ul>
-            }
+            <div
+                className={`${styles.carousel__items__container}`}
+                onWheel={handleScroll}
+                onMouseEnter={() => setIsHoverCarousel(true)}
+                onMouseDown={handleMouseDown}
+                onMouseLeave={handleMouseLeave}
+                onMouseUp={handleMouseUp}
+                onMouseMove={handleMouseMove}
+                ref={carouselRef}
+            >
+                {children}
+            </div>
         </section>
     )
 }

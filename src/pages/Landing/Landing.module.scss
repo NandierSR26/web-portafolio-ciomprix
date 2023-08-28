@@ -20,6 +20,14 @@
     font-size: 14px;
 }
 
+.landing__navlink_active {
+    transition: all .3s ease-in;
+}
+
+.landing__nav_item:hover .landing__navlink_active {
+    width: 100%;
+}
+
 @media screen and (min-width:1024px) {
     .landing__banner {
         height: 700px;

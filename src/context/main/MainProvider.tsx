@@ -2,6 +2,7 @@ import { ReactNode, useEffect, useState } from "react"
 import { MainContext } from "./MainContext"
 import { api } from "../../api"
 import { ICategory, ICompany, IContent, IRegisterUserData, ISolutions, IUser } from "../../interfaces"
+import toast from 'react-hot-toast'
 
 interface MainProviderProps {
     children: ReactNode
@@ -59,17 +60,19 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     const createSolution = async (dataValues: ISolutions) => {
 
         try {
-            const { data: { data } } = await solutionsApi.createSolution(dataValues)
+            const { data: { data, message } } = await solutionsApi.createSolution(dataValues)
             setSolutions([...solutions, data])
+            toast.success(message)
         } catch (error) {
             console.log(error)
+            toast.error('Algo salio mal')
         }
     }
 
     const updateSolution = async (id: number, dataValues: ISolutions) => {
         setSolutionByID({} as ISolutions)
         try {
-            const { data: { data } } = await solutionsApi.updateSolution(id, dataValues)
+            const { data: { data, message } } = await solutionsApi.updateSolution(id, dataValues)
 
             // actualizar el arreglo de soluciones
             const index = solutions.findIndex(solution => solution.id === data.id)
@@ -78,18 +81,23 @@ export const MainProvider = ({ children }: MainProviderProps) => {
 
             // actualizar en el estado la solucion con los nuevos datos
             setSolutionByID(data)
+            toast.success(message)
 
         } catch (error) {
             console.log(error)
+            toast.error('Algo salio mal')
         }
     }
 
     const deleteSolution = async (id: number) => {
         try {
-            const { data: { data } } = await solutionsApi.deleteSolution(id)
-            console.log(data)
+            const { data: { data, message } } = await solutionsApi.deleteSolution(id)
+            
+            const newSolutions = solutions.filter(solution => solution.id !== id)
+            setSolutions(newSolutions)
         } catch (error) {
             console.log(error)
+            toast.error('Algo salio mal')
         }
     }
 
@@ -126,16 +134,19 @@ export const MainProvider = ({ children }: MainProviderProps) => {
 
     const createCategory = async (dataValues: FormData) => {
         try {
-            const { data: { data } } = await categoriesApi.createCategory(dataValues)
-            // setCategories([...categories, data])
+            const { data: { data, message } } = await categoriesApi.createCategory(dataValues)
+            setCategories([...categories, data])
+
+            toast.success(message)
         } catch (error) {
             console.log(error)
+            toast.error('Algo salio mal')
         }
     }
 
     const updateCategory = async (id: number, dataValues: FormData) => {
         try {
-            const { data: { data } } = await categoriesApi.updateCategory(id, dataValues)
+            const { data: { data, message } } = await categoriesApi.updateCategory(id, dataValues)
             console.log(data)
 
             const index = categoriesBySolution.findIndex(category => category.id === data.id)
@@ -143,17 +154,22 @@ export const MainProvider = ({ children }: MainProviderProps) => {
             categoriesBySolution[index] = data
 
             setCategoryById(data)
+            toast.success(message)
         } catch (error) {
             console.log(error)
+            toast.error('Algo salio mal')
         }
     }
 
     const deleteCategory = async (id: number) => {
         try {
             const { data: { data } } = await categoriesApi.deleteCategory(id)
-            console.log(data)
+
+            const newCategories = categoriesBySolution.filter(category => category.id !== id)
+            setCategoriesBySolution(newCategories)
         } catch (error) {
             console.log(error)
+            toast.error('Algo salio mal')
         }
     }
 
@@ -189,17 +205,19 @@ export const MainProvider = ({ children }: MainProviderProps) => {
 
     const createContent = async (dataValues: FormData) => {
         try {
-            const { data: { data } } = await contentsApi.createContent(dataValues)
+            const { data: { data, message } } = await contentsApi.createContent(dataValues)
             console.log(data)
             setContentsByCategory([...contentsByCategory, data])
+            toast.success(message)
         } catch (error) {
             console.log(error);
+            toast.error('Algo salio mal')
         }
     }
 
     const updateContent = async (id: number, dataValues: FormData) => {
         try {
-            const { data: { data } } = await contentsApi.updateContent(id, dataValues)
+            const { data: { data, message } } = await contentsApi.updateContent(id, dataValues)
             console.log(data)
 
             const index = contentsByCategory.findIndex(content => content.id === data.id)
@@ -207,16 +225,19 @@ export const MainProvider = ({ children }: MainProviderProps) => {
             contentsByCategory[index] = data
 
             setContentsByID(data)
+            toast.success(message)
 
         } catch (error) {
             console.log(error);
+            toast.error('Algo salio mal')
         }
     }
 
     const deleteContent = async (id: number) => {
         try {
             const { data } = await contentsApi.deleteContent(id)
-            console.log(data)
+            const newContents = contentsByCategory.filter(content => content.id !== id)
+            setContentsByCategory(newContents)
         } catch (error) {
             console.log(error);
         }
@@ -237,7 +258,6 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     const getCompanyByID = async (id: number) => {
         try {
             const { data: { data } } = await companiesApi.getCompanyById(id)
-            console.log(data)
             setCompanyByID(data)
         } catch (error) {
             console.log(error)
@@ -256,28 +276,38 @@ export const MainProvider = ({ children }: MainProviderProps) => {
 
     const createCompany = async (dataValues: FormData) => {
         try {
-            const { data } = await companiesApi.createCompany(dataValues)
-            console.log(data)
+            const { data: { data, message } } = await companiesApi.createCompany(dataValues)
+            setCompanies([...companies, data])
+            toast.success(message)
         } catch (error) {
             console.log(error)
+            toast.error('Algo salio mal')
         }
     }
 
     const updateCompany = async (id: number, dataValues: FormData) => {
         try {
-            const { data } = await companiesApi.updateCompany(id, dataValues)
-            console.log(data)
+            const { data:{ data, message } } = await companiesApi.updateCompany(id, dataValues)
+            
+            const index = companies.findIndex( company => company.id === data.id)
+            companies[index] = data
+
+            setCompanyByID(data)
+            toast.success(message)
         } catch (error) {
             console.log(error)
+            toast.error('Algo salio mal')
         }
     }
 
     const deleteCompany = async (id: number) => {
         try {
             const { data } = await companiesApi.deleteCompany(id)
-            console.log(data)
+            
+            setCompanies(companies.filter(company => company.id !== id))
         } catch (error) {
             console.log(error)
+            toast.error('Algo salio mal')
         }
     }
 
@@ -285,7 +315,6 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     const getUsers = async () => {
         try {
             const { data: { data } } = await usersApi.getUsers()
-            console.log(data)
             setUsers(data)
         } catch (error) {
             console.log(error)
@@ -295,7 +324,6 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     const getUserByID = async (id_user: number) => {
         try {
             const { data: { data } } = await usersApi.getUserByID(id_user)
-            console.log(data)
             setUserByID(data)
         } catch (error) {
             console.log(error);
@@ -304,24 +332,25 @@ export const MainProvider = ({ children }: MainProviderProps) => {
 
     const createUser = async (dataValues: IRegisterUserData) => {
         try {
-            const { data: { data } } = await usersApi.createUser(dataValues)
-            console.log(data)
+            const { data: { data, message } } = await usersApi.createUser(dataValues)
             setUsers([...users, data])
+            toast.success(message)
         } catch (error) {
             console.log(error);
+            toast.error('Algo salio mal')
         }
     }
 
     const updateUser = async (id_user: number, dataValues: IRegisterUserData) => {
         try {
-            const { data: { data } } = await usersApi.updateUser(id_user, dataValues)
-            console.log(data)
+            const { data: { data, message } } = await usersApi.updateUser(id_user, dataValues)
 
             const index = users.findIndex(user => user.id === data.id)
             if (index === -1) return
             users[index] = data
 
             setUserByID(data)
+            toast.success(message)
         } catch (error) {
             console.log(error);
         }
@@ -330,7 +359,6 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     const deleteUser = async (id: number) => {
         try {
             const { data } = await usersApi.deleteUser(id)
-            console.log(data)
 
             const newUsers = users.filter( user => user.id !== id)
             setUsers(newUsers)
@@ -344,6 +372,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     useEffect(() => {
         getSolutions()
         getCategories()
+        getCompanies()
     }, [])
 
     return (

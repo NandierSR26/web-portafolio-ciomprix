@@ -4,6 +4,8 @@ import { AdminCard, AdminLayout } from '../../../components'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import Swal from 'sweetalert2'
+import toast from 'react-hot-toast'
 
 export const Users = () => {
 
@@ -11,8 +13,23 @@ export const Users = () => {
     const navigate = useNavigate()
 
     const handleDeleteUser = (id_user: number) => {
-        setFetching(true)
-        deleteUser(id_user).then(user => setFetching(false))
+        Swal.fire({
+            title: 'Esta seguro?',
+            text: "Esta accion no se puede deshacer!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteUser(id_user)
+                    .then(user => {
+                        toast.success('Usuario eliminado')
+                    })
+            }
+        })
     }
 
     useEffect(() => {

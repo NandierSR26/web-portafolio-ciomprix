@@ -90,7 +90,11 @@ export const CategoriesForm = () => {
                         formData.append('description_c', description_c as string)
                         formData.append('img_c', categoryImg.file)
                         formData.append('id_s', id_s.toString())
-                        formData.append('active_s', isToggleActive ? '1' : '0')
+                        formData.append('active_c', isToggleActive ? '1' : '0')
+
+                        // formData.forEach((values, key) => {
+                        //     console.log({key, values})
+                        // })
 
                         createCategory(formData)
                         navigate(-1)
@@ -166,7 +170,7 @@ export const CategoriesForm = () => {
                                 className={`text-xl font-semibold text-black px-10 py-2 rounded-full cursor-pointer ${!isToggleActive && 'bg-red-500 text-white'}`}
                                 onClick={() => setIsToggleActive(false)}
                             >
-                                Desactiva
+                                Inactiva
                             </div>
                         </div>
 

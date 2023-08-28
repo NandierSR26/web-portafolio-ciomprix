@@ -4,6 +4,8 @@ import { useMainContext } from '../../../context'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPencil, faPlus, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import toast from 'react-hot-toast'
 
 export const Solutions = () => {
 
@@ -11,10 +13,23 @@ export const Solutions = () => {
     const navigate = useNavigate()
 
     const handleDeleteSolution = (id_solution: number) => {
-        deleteSolution(id_solution)
-            .then(solution => {
-                console.log(solution)
-            })
+        Swal.fire({
+            title: 'Esta seguro?',
+            text: "Esta accion no se puede deshacer!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteSolution(id_solution)
+                    .then(solution => {
+                        toast.success('Solución eliminada')
+                    })
+            }
+        })
     }
 
     return (
@@ -35,7 +50,7 @@ export const Solutions = () => {
                     onClick={() => navigate('/admin/create-solution')}
                 >
                     <FontAwesomeIcon icon={faPlus} className="text-orange-500 text-7xl" />
-                    <p className="text-3xl text-orange-500 font-bold">Agregar solucion</p>
+                    <p className="text-3xl text-orange-500 font-bold">Agregar solución</p>
                 </div>
             </div>
         </AdminLayout>

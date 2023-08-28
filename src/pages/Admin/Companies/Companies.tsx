@@ -4,6 +4,8 @@ import { useMainContext } from '../../../context'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
+import Swal from 'sweetalert2'
+import toast from 'react-hot-toast'
 
 export const Companies = () => {
 
@@ -11,9 +13,23 @@ export const Companies = () => {
     const navigate = useNavigate()
 
     const handleDeleteCompany = (id_company: number): void => {
-        setFetching(true)
-        deleteCompany(id_company)
-            .then(result => setFetching(false))
+        Swal.fire({
+            title: 'Esta seguro?',
+            text: "Esta accion no se puede deshacer!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteCompany(id_company)
+                    .then(company => {
+                        toast.success('Empresa eliminada')
+                    })
+            }
+        })
     }
 
     useEffect(() => {

@@ -23,22 +23,22 @@ export const Landing = () => {
     }
 
     useEffect(() => {
-        if(!alias) return
+        if (!alias) return
 
         setFetching(true)
         getCompanyByAlias(alias).then(company => setFetching(false))
     }, [alias])
 
-    if(fetching) return <h1>Cargando...</h1>
+    if (fetching) return <h1>Cargando...</h1>
 
     return (
         <div>
             <header className="flex justify-between items-center gap-32  px-7 md:px-28 py-5 bg-blue-primary">
                 <figure className="w-40 md:w-auto mx-auto">
-                    <img 
-                        src={companyByAlias.id ? import.meta.env.VITE_API_URL_DEVELOPMENT+'/'+companyByAlias.logo : ciomprixLogo} 
-                        className='w-[160px] h-[40px] md:w-[250px] md:h-[50px]' 
-                        alt="logo" 
+                    <img
+                        src={companyByAlias.id ? import.meta.env.VITE_API_URL_DEVELOPMENT + '/' + companyByAlias.logo : ciomprixLogo}
+                        className='w-[160px] h-[40px] md:w-[250px] md:h-[50px]'
+                        alt="logo"
                     />
                 </figure>
 
@@ -49,7 +49,19 @@ export const Landing = () => {
                         <ul className="flex-1 justify-end items-center gap-10 hidden md:flex">
                             {
                                 solutions.slice(0, 4).map(solution => (
-                                    <li className={`${styles.landing__navlinks}`}>{solution.tittle_s}</li>
+                                    <li
+                                        className={`${styles.landing__nav_item}`}
+                                        key={solution.id}
+                                    >
+                                        <a
+                                            href={`#section-${solution.id}`}
+                                            className={`${styles.landing__navlinks}`}
+                                        >
+                                            {solution.tittle_s}
+                                        </a>
+
+                                        <div className={`w-0 mx-auto bg-white h-[2px] ${styles.landing__navlink_active}`}></div>
+                                    </li>
                                 ))
                             }
                         </ul>
@@ -72,7 +84,12 @@ export const Landing = () => {
             <div className={`${styles.landing__solutions_container} mx-auto px-7 md:px-32`}>
                 {
                     solutions.map(({ id, img_s, tittle_s }) => (
-                        <SolutionMiniCard key={id} image={img_s as string} title={tittle_s as string} />
+                        <SolutionMiniCard
+                            idSolution={id as number}
+                            image={img_s as string}
+                            title={tittle_s as string}
+                            companyByAlias={companyByAlias}
+                        />
                     ))
                 }
             </div>
@@ -80,7 +97,7 @@ export const Landing = () => {
 
             {
                 solutions && solutions.map((solution, i) => (
-                    <CarouselSection key={solution.id} element={solutions} title={solution.tittle_s as string} className={`${i === 0 ? 'mt-40' : 0}`}>
+                    <CarouselSection key={solution.id} element={solution} title={solution.tittle_s as string} className={`${i === 0 ? 'mt-40' : 0}`}>
                         {getCategoriesBySolution(solution.id as number).map(category => (
                             <CategoriesCard key={category.id} category={category} />
                         ))}

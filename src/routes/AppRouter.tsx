@@ -6,19 +6,23 @@ import { Categories, CategoriesForm, Companies, CompaniesForm, Contents, Content
 import { PrivateRoutes } from './PrivateRoutes'
 import { useAuthContext } from '../context/auth/AuthContext'
 import { PublicRoutes } from './PublicRoutes'
+import { useMainContext } from '../context'
+import { Navigate } from 'react-router-dom'
 
 export const AppRouter = () => {
 
     const { loading } = useAuthContext()
+    const { companies } = useMainContext()
 
     if (loading) return <h1>Cargando...</h1>
 
     return (
         <Routes>
             <Route element={<PublicRoutes />}>
-                <Route path="/" element={<Landing />} />
+                <Route path="/" element={<Navigate to={`/${companies[0].alias}`} />} />
                 <Route path="/:alias" element={<Landing />} />
-                <Route path="/category/:id" element={<CategoryDetail />} />
+                {/* <Route path="/category/:id" element={<Navigate to={`/${companies[0].alias}/category/:id`} />} /> */}
+                <Route path="/:alias/category/:id" element={<CategoryDetail />} />
                 <Route path="/admin/login" element={<Login />} />
             </Route>
 

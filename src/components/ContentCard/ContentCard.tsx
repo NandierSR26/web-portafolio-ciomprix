@@ -24,13 +24,15 @@ export const ContentCard = ({ content }: ContentCardProps) => {
                 <h4 className='w-full px-4 mb-6 openBold text-white text-base xl:text-xl text-center font-medium'>{content.tittle_sc}</h4>
                 {
                     content.vid_sc_origin === 0 ? (
-                        <Link
-                            to={content.vid_sc}
-                            target='_blank'
+                        <button
+                            onClick={() => {
+                                setVideoContentUrl(content.vid_sc)
+                                setVideoModalOpen(true)
+                            }}
                             className='w-24 py-1 mb-8 bg-blue-500 px-6 text-white rounded-full text-l text-center openMedium transition-all duration-200 hover:scale-110 hover:text-white'
                         >
                             Ver
-                        </Link>
+                        </button>
                     ) : (
                         <button
                             className='w-24 py-1 mb-8 bg-blue-500 px-6 text-white rounded-full text-l text-center openMedium transition-all duration-200 hover:scale-110 hover:text-white'

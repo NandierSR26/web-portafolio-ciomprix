@@ -6,6 +6,8 @@ import { IContent } from '../../../interfaces'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCirclePlus, faPencil, faPlugCirclePlus, faPlus, faPlusCircle, faTrash } from '@fortawesome/free-solid-svg-icons'
 import { useNavigate } from 'react-router-dom'
+import Swal from 'sweetalert2'
+import toast from 'react-hot-toast'
 
 export const Contents = () => {
 
@@ -25,11 +27,23 @@ export const Contents = () => {
     }
 
     const handleDeleteContent = (id_content: number): void => {
-        deleteContent(id_content)
-            .then(contents => {
-                setFetching(false)
-                console.log(contents)
-            })
+        Swal.fire({
+            title: 'Esta seguro?',
+            text: "Esta accion no se puede deshacer!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Aceptar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                deleteContent(id_content)
+                    .then(content => {
+                        toast.success('Contenido eliminado')
+                    })
+            }
+        })
     }
 
     useEffect(() => {
