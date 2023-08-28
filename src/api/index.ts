@@ -9,9 +9,9 @@ export const api = () => {
 
     const axiosConfig = axios.create({
         baseURL: 'http://localhost:8081/api',
-        headers: {
-            "Content-Type": "multipart/form-data"
-        }
+        // headers: {
+        //     "Content-Type": "multipart/form-data"
+        // }
     })
 
     axiosConfig.interceptors.request.use(async (config) => {

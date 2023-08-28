@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import { ICategory, ICompany, IContent, ISolutions } from "../../interfaces";
+import { ICategory, ICompany, IContent, IRegisterUserData, ISolutions, IUser } from "../../interfaces";
 
 interface MainContextProps {
     // PROPIEDADES
@@ -20,41 +20,52 @@ interface MainContextProps {
     contentsByCategory: IContent[];
 
     // empresas
-    companies: ICompany[] | null;
-    companyByID: ICompany | null;
+    companies: ICompany[];
+    companyByID: ICompany;
+
+    // usuarios
+    users: IUser[];
+    userByID: IUser;
 
     // METODOS
     setFetching: React.Dispatch<React.SetStateAction<boolean>>;
 
     // solutions
     getSolutions: () => Promise<void>;
-    getSolutionByID: (id:number) => Promise<ISolutions>;
-    createSolution: (data:ISolutions) => Promise<void>
-    updateSolution: (id:number, data:ISolutions) => Promise<void>;
-    deleteSolution: (id:number) => Promise<void>;
-    
+    getSolutionByID: (id: number) => Promise<ISolutions>;
+    createSolution: (data: ISolutions) => Promise<void>
+    updateSolution: (id: number, data: ISolutions) => Promise<void>;
+    deleteSolution: (id: number) => Promise<void>;
+
     // categories
     getCategories: () => Promise<void>;
-    getCategoryById: (id:number) => Promise<void>;
-    getCategoryByIdSolution: (id:number) => Promise<ICategory[]>;
-    createCategory: (data:FormData) => Promise<void>;
-    updateCategory: (id:number, data:FormData) => Promise<void>;
-    deleteCategory: (id:number) => Promise<void>;
+    getCategoryById: (id: number) => Promise<void>;
+    getCategoryByIdSolution: (id: number) => Promise<ICategory[]>;
+    createCategory: (data: FormData) => Promise<void>;
+    updateCategory: (id: number, data: FormData) => Promise<void>;
+    deleteCategory: (id: number) => Promise<void>;
 
     // contenidos
     getContents: () => Promise<void>
-    getContentByID: (id:number) => Promise<void>
-    getContentByCategory: (id_category:number) => Promise<void>
-    createContent: (data:FormData) => Promise<void>
-    updateContent: (id:number, data:FormData) => Promise<void>
-    deleteContent: (id:number) => Promise<void>
+    getContentByID: (id: number) => Promise<void>
+    getContentByCategory: (id_category: number) => Promise<void>
+    createContent: (data: FormData) => Promise<void>
+    updateContent: (id: number, data: FormData) => Promise<void>
+    deleteContent: (id: number) => Promise<void>
 
     // empresas
     getCompanies: () => Promise<void>
-    getCompanyByID: (id:number) => Promise<void>
-    createCompany: (data:FormData) => Promise<void>
-    updateCompany: (id:number, data:FormData) => Promise<void>
-    deleteCompany: (id:number) => Promise<void>
+    getCompanyByID: (id: number) => Promise<void>
+    createCompany: (data: FormData) => Promise<void>
+    updateCompany: (id: number, data: FormData) => Promise<void>
+    deleteCompany: (id: number) => Promise<void>
+
+    // usuarios
+    getUsers: () => Promise<void>;
+    getUserByID: (id_user:number) => Promise<void>;
+    createUser: (dataValues: IRegisterUserData) => Promise<void>;
+    updateUser: (id_user:number, dataValues:IRegisterUserData) => Promise<void>;
+    deleteUser: (id_user: number) => Promise<void>;
 
 }
 

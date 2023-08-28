@@ -1,7 +1,7 @@
 import React, { ReactNode, useState } from 'react'
 import styles from './AdminLayout.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faBars, faBuilding, faChartLine, faClose, faRightFromBracket } from '@fortawesome/free-solid-svg-icons'
+import { faBars, faBuilding, faChartLine, faClose, faRightFromBracket, faUser } from '@fortawesome/free-solid-svg-icons'
 
 import logoCiom from '/images/ciomprix-logo-white.svg'
 import { GrStorage } from 'react-icons/gr'
@@ -110,6 +110,14 @@ export const AdminLayout = ({ children, currentPageName, logo }: AdminLayoutProp
                     >
                         <FontAwesomeIcon icon={faBuilding} className="text-3xl text-black" />
                         <p className="text-2xl text-black font-semibold">Compañias</p>
+                    </div>
+
+                    <div 
+                        className="flex items-center gap-5 cursor-pointer" 
+                        onClick={() => navigate('/admin/users')}
+                    >
+                        <FontAwesomeIcon icon={faUser} className="text-3xl text-black" />
+                        <p className="text-2xl text-black font-semibold">Usuarios</p>
                     </div>
 
                 </section>

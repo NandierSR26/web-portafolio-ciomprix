@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 
 type Status = 1 | 0
 
-type TypeContent = "solution" | "category" | "content" | "company"
+type TypeContent = "solution" | "category" | "content" | "company" | "user"
 
 interface AdminCardProps {
     id: number;

@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from "react"
 import { MainContext } from "./MainContext"
 import { api } from "../../api"
-import { ICategory, ICompany, IContent, ISolutions } from "../../interfaces"
+import { ICategory, ICompany, IContent, IRegisterUserData, ISolutions, IUser } from "../../interfaces"
 
 interface MainProviderProps {
     children: ReactNode
@@ -24,8 +24,11 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     const [contentsByID, setContentsByID] = useState<IContent>({} as IContent)
     const [contentsByCategory, setContentsByCategory] = useState<IContent[]>([])
 
-    const [companies, setCompanies] = useState<ICompany[] | null>(null)
-    const [companyByID, setCompanyByID] = useState<ICompany | null>(null)
+    const [companies, setCompanies] = useState<ICompany[]>([])
+    const [companyByID, setCompanyByID] = useState<ICompany>({} as ICompany)
+
+    const [users, setUsers] = useState<IUser[]>([])
+    const [userByID, setUserByID] = useState<IUser>({} as IUser)
 
     // SOLUTIONS
     const getSolutions = async () => {
@@ -50,7 +53,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     }
 
     const createSolution = async (dataValues: ISolutions) => {
-        
+
         try {
             const { data: { data } } = await solutionsApi.createSolution(dataValues)
             setSolutions([...solutions, data])
@@ -65,8 +68,8 @@ export const MainProvider = ({ children }: MainProviderProps) => {
             const { data: { data } } = await solutionsApi.updateSolution(id, dataValues)
 
             // actualizar el arreglo de soluciones
-            const index = solutions.findIndex(solution => solution.id  === data.id)
-            if(index === -1) return
+            const index = solutions.findIndex(solution => solution.id === data.id)
+            if (index === -1) return
             solutions[index] = data
 
             // actualizar en el estado la solucion con los nuevos datos
@@ -132,7 +135,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
             console.log(data)
 
             const index = categoriesBySolution.findIndex(category => category.id === data.id)
-            if(index === -1) return
+            if (index === -1) return
             categoriesBySolution[index] = data
 
             setCategoryById(data)
@@ -196,7 +199,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
             console.log(data)
 
             const index = contentsByCategory.findIndex(content => content.id === data.id)
-            if(index === -1) return
+            if (index === -1) return
             contentsByCategory[index] = data
 
             setContentsByID(data)
@@ -264,6 +267,64 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         }
     }
 
+    // USUARIOS
+    const getUsers = async () => {
+        try {
+            const { data: { data } } = await usersApi.getUsers()
+            console.log(data)
+            setUsers(data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const getUserByID = async (id_user: number) => {
+        try {
+            const { data: { data } } = await usersApi.getUserByID(id_user)
+            console.log(data)
+            setUserByID(data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const createUser = async (dataValues: IRegisterUserData) => {
+        try {
+            const { data: { data } } = await usersApi.createUser(dataValues)
+            console.log(data)
+            setUsers([...users, data])
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const updateUser = async (id_user: number, dataValues: IRegisterUserData) => {
+        try {
+            const { data: { data } } = await usersApi.updateUser(id_user, dataValues)
+            console.log(data)
+
+            const index = users.findIndex(user => user.id === data.id)
+            if (index === -1) return
+            users[index] = data
+
+            setUserByID(data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const deleteUser = async (id: number) => {
+        try {
+            const { data } = await usersApi.deleteUser(id)
+            console.log(data)
+
+            const newUsers = users.filter( user => user.id !== id)
+            setUsers(newUsers)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     useEffect(() => {
         getSolutions()
@@ -282,6 +343,8 @@ export const MainProvider = ({ children }: MainProviderProps) => {
             contentsByCategory,
             companies,
             companyByID,
+            users,
+            userByID,
             fetching,
 
             setFetching,
@@ -307,9 +370,13 @@ export const MainProvider = ({ children }: MainProviderProps) => {
             createCompany,
             updateCompany,
             deleteCompany,
-
+            getUsers,
+            getUserByID,
+            createUser,
+            updateUser,
+            deleteUser,
         }}>
-            { children }
+            {children}
         </MainContext.Provider>
     )
 }
