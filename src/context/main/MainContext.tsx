@@ -20,8 +20,8 @@ interface MainContextProps {
     contentsByCategory: IContent[];
 
     // empresas
-    companies: ICompany[];
-    companyByID: ICompany;
+    companies: ICompany[] | null;
+    companyByID: ICompany | null;
 
     // METODOS
     setFetching: React.Dispatch<React.SetStateAction<boolean>>;
@@ -52,9 +52,9 @@ interface MainContextProps {
     // empresas
     getCompanies: () => Promise<void>
     getCompanyByID: (id:number) => Promise<void>
-    createCompany: (data:ICompany) => Promise<void>
-    updateCompany: (id:number, data:ICompany) => Promise<void>
-    deleteComany: (id:number) => Promise<void>
+    createCompany: (data:FormData) => Promise<void>
+    updateCompany: (id:number, data:FormData) => Promise<void>
+    deleteCompany: (id:number) => Promise<void>
 
 }
 

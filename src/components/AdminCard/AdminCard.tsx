@@ -12,7 +12,7 @@ interface AdminCardProps {
     title: string;
     status: number;
     type: TypeContent
-    deleteElement: (id:number) => void
+    deleteElement: (id: number) => void
 }
 
 export const AdminCard = ({ id, title, status, type, deleteElement }: AdminCardProps) => {
@@ -21,7 +21,7 @@ export const AdminCard = ({ id, title, status, type, deleteElement }: AdminCardP
 
     return (
         <div
-            className="flex flex-col justify-between w-full flex-1 min-w-[250px] sm:max-w-md p-5 bg-white rounded-2xl shadow-xl"
+            className="flex flex-col justify-between w-full flex-1 min-w-[250px] max-w-[380px] p-5 bg-white rounded-2xl shadow-xl"
         >
             <div className="flex justify-between w-full mb-16">
                 <div
@@ -31,7 +31,7 @@ export const AdminCard = ({ id, title, status, type, deleteElement }: AdminCardP
                     <FontAwesomeIcon icon={faPencil} className="text-base text-white" />
                 </div>
 
-                <div 
+                <div
                     className="p-2 bg-red-500 rounded-lg w-10 h-10 flex justify-center items-center cursor-pointer"
                     onClick={() => deleteElement(id)}
                 >
@@ -43,9 +43,19 @@ export const AdminCard = ({ id, title, status, type, deleteElement }: AdminCardP
                 <h4 className="text-3xl font-bold text-center mb-10">{title}</h4>
 
                 <div className="flex justify-center items-center gap-5">
-                    <span className="text-lg font-bold px-3 cursor-pointer">Activar</span>
-                    <span className="text-lg font-bold px-3 cursor-pointer">Desactivar</span>
-                    <span className="block w-5 h-5 bg-green-500 rounded-full"></span>
+                    {
+                        status === 0 ? (
+                            <>
+                                <span className="text-lg font-bold px-3 cursor-pointer">Desactivo</span>
+                                <span className="w-5 h-5 bg-red-500 rounded-full flex-shrink-0"></span>
+                            </>
+                        ) : (
+                            <>
+                                <span className="text-lg font-bold px-3 cursor-pointer">Activo</span>
+                                <span className="w-5 h-5 bg-green-500 rounded-full flex-shrink-0"></span>
+                            </>
+                        )
+                    }
                 </div>
             </div>
         </div>

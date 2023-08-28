@@ -84,9 +84,10 @@ export const ContentsForm = () => {
     useEffect(() => {
         if(!contentsByID.id) return
 
-        setContentVideoOrigin(contentsByID.vid_sc_origin)
+        setContentVideoOrigin(contentsByID.vid_sc_origin ? contentsByID.vid_sc_origin : 0)
         if(contentsByID.active_sc === 0) setIsToggleActive(false)
         if(contentsByID.active_sc === 1) setIsToggleActive(true)
+        // console.log(contentsByID)
     }, [contentsByID])
 
     if (!formPurpose) return <h1>Cargando...</h1>
@@ -136,7 +137,7 @@ export const ContentsForm = () => {
                         videoOption === 'video - url' ? formData.append('vid_sc', vid_sc as string) : contentVideo && formData.append('vid_sc', contentVideo?.file)
                         formData.append('active_sc', isToggleActive ? '1' : '0')
                         formData.append('id_c', id_c.toString())
-                        formData.append('vid_sc_origin', contentVideoOrigin.toString())
+                        contentVideoOrigin && formData.append('vid_sc_origin', contentVideoOrigin.toString())
 
                         // formData.forEach((value, key) => console.log({key, value}))
                         

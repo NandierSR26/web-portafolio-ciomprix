@@ -24,8 +24,8 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     const [contentsByID, setContentsByID] = useState<IContent>({} as IContent)
     const [contentsByCategory, setContentsByCategory] = useState<IContent[]>([])
 
-    const [companies, setCompanies] = useState<ICompany[]>([])
-    const [companyByID, setCompanyByID] = useState<ICompany>({} as ICompany)
+    const [companies, setCompanies] = useState<ICompany[] | null>(null)
+    const [companyByID, setCompanyByID] = useState<ICompany | null>(null)
 
     // SOLUTIONS
     const getSolutions = async () => {
@@ -237,7 +237,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         }
     }
 
-    const createCompany = async (dataValues: ICompany) => {
+    const createCompany = async (dataValues: FormData) => {
         try {
             const { data } = await companiesApi.createCompany(dataValues)
             console.log(data)
@@ -246,7 +246,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         }
     }
 
-    const updateCompany = async (id: number, dataValues: ICompany) => {
+    const updateCompany = async (id: number, dataValues: FormData) => {
         try {
             const { data } = await companiesApi.updateCompany(id, dataValues)
             console.log(data)
@@ -255,7 +255,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         }
     }
 
-    const deleteComany = async (id: number) => {
+    const deleteCompany = async (id: number) => {
         try {
             const { data } = await companiesApi.deleteCompany(id)
             console.log(data)
@@ -306,7 +306,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
             getCompanyByID,
             createCompany,
             updateCompany,
-            deleteComany,
+            deleteCompany,
 
         }}>
             { children }

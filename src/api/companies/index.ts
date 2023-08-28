@@ -6,8 +6,8 @@ export default function Action(api:AxiosInstance) {
     return {
         getAllCompanies: () => api.get<ApiResponse>('/companies'),
         getCompanyById: (id:number) => api.get<ApiResponse>(`/company/${id}`),
-        createCompany: (data:ICompany) => api.post<ApiResponse>('/companies', data),
-        updateCompany: (id:number, data:ICompany) => api.put<ApiResponse>(`/company/${id}`, data),
+        createCompany: (data:FormData) => api.post<ApiResponse>('/companies', data),
+        updateCompany: (id:number, data:FormData) => api.put<ApiResponse>(`/company/${id}`, data),
         deleteCompany: (id:number) => api.delete<ApiResponse>(`/company/${id}`)
     }
 }

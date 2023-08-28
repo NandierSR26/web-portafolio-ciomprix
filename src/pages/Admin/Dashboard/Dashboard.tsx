@@ -33,7 +33,7 @@ export const Dashboard = () => {
                 </div>
 
                 <div className="flex flex-col items-center w-full sm:w-fit border-[2px] border-gray-500 rounded-2xl p-5">
-                    <h4 className="text-2xl text-black font-bold mb-3">{companies.length}</h4>
+                    <h4 className="text-2xl text-black font-bold mb-3">{companies?.length}</h4>
                     <p className="text-black text-xl font-medium">Compañias</p>
                 </div>
             </div>

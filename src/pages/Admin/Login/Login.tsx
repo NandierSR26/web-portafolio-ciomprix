@@ -45,7 +45,7 @@ export const Login = () => {
                     >
                         {({ errors, touched, handleSubmit, handleChange, values }) => (
 
-                            <form onSubmit={handleSubmit} className={`max-w-5xl mx-auto ${styles.login__login_form}`}>
+                            <form onSubmit={handleSubmit} className={`max-w-5xl mx-auto ${styles.login__login_form} flex flex-col gap-5`}>
                                 <h2 className="text-white text-3xl font-bold text-center mb-2">Iniciar Sesión</h2>
                                 <p className="text-white text-lg font-medium text-center mb-10">Ingresa con tu usuario administrativo</p>
 
@@ -59,6 +59,7 @@ export const Login = () => {
                                     value={values.email}
                                     errors={errors.email}
                                     className="text-white"
+                                    labelStyle="text-white"
                                 />
 
                                 <Input
@@ -71,6 +72,7 @@ export const Login = () => {
                                     value={values.pass}
                                     errors={errors.pass}
                                     className="text-white"
+                                    labelStyle="text-white"
                                 />
 
                                 <button

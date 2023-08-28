@@ -5,4 +5,5 @@ export interface ICompany {
     logo: string;
     color1: string;
     color2: string;
+    active: number;
 }

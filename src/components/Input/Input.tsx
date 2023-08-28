@@ -6,14 +6,15 @@ interface InputProps extends Partial<HTMLInputElement> {
     touched: any;
     errors: any;
     label?: string;
+    labelStyle?: string;
 }
 
-export const Input = ({ type, name, placeholder, onChange, touched, errors, value, label, ...props }: InputProps) => {
+export const Input = ({ type, name, placeholder, onChange, touched, errors, value, label, labelStyle, ...props }: InputProps) => {
     return (
         <div className="flex flex-col gap-1 min-w-0">
             {label && (
                 <label
-                    className="text-lg font-bold"
+                    className={`text-lg font-bold ${labelStyle && labelStyle}`}
                     htmlFor={name}
                 >
                     {label}
