@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CategoriesCard, SolutionMiniCard } from '../../components'
+import { CategoriesCard, Footer, SolutionMiniCard } from '../../components'
 import { CarouselSection } from '../../components/CarouselSection'
 import { ICategory } from '../../interfaces'
 import { useMainContext } from '../../context'
@@ -9,37 +9,52 @@ import bannerBgImage from '/images/img-main-banner.png'
 import bannerBgMobile from '/images/img-main-banner-mobile.png'
 import ciomprixLogo from '/images/ciomprix-logo-white.svg'
 import styles from './Landing.module.scss'
+import { useParams } from 'react-router-dom'
 
 export const Landing = () => {
 
-    const { solutions, categories, fetching, getCategoryByIdSolution } = useMainContext()
+    const { solutions, categories, fetching, getCategoryByIdSolution, getCompanyByAlias, companyByAlias, setFetching } = useMainContext()
     const [categoriesBySolution, setCategoriesBySolution] = useState<ICategory[]>([])
-    const { width } = useScreenSize() 
+    const { width } = useScreenSize()
+    const { alias } = useParams()
 
     const getCategoriesBySolution = (id_solution: number): ICategory[] => {
         return categories.filter(category => category.id_s === id_solution)
     }
 
-    // useEffect(() => {
-    //     if (!categoriesBySolution.categories.length) return
-    //     console.log(categoriesBySolution)
-    // }, [categoriesBySolution])
+    useEffect(() => {
+        if(!alias) return
+
+        setFetching(true)
+        getCompanyByAlias(alias).then(company => setFetching(false))
+    }, [alias])
+
+    if(fetching) return <h1>Cargando...</h1>
 
     return (
         <div>
-            <header className="flex justify-between items-center px-7 md:px-28 py-5 bg-blue-primary">
-                <figure className="w-40 md:w-auto">
-                    <img src={ciomprixLogo} className='' alt="logo" />
+            <header className="flex justify-between items-center gap-32  px-7 md:px-28 py-5 bg-blue-primary">
+                <figure className="w-40 md:w-auto mx-auto">
+                    <img 
+                        src={companyByAlias.id ? import.meta.env.VITE_API_URL_DEVELOPMENT+'/'+companyByAlias.logo : ciomprixLogo} 
+                        className='w-[160px] h-[40px] md:w-[250px] md:h-[50px]' 
+                        alt="logo" 
+                    />
                 </figure>
 
-                <div className="flex-1"></div>
+                {/* <div className="flex-1"></div> */}
 
-                <ul className="flex-1 justify-between items-center gap-10 hidden md:flex">
-                    <li className={`${styles.landing__navlinks}`}>item 1</li>
-                    <li className={`${styles.landing__navlinks}`}>item 2</li>
-                    <li className={`${styles.landing__navlinks}`}>item 3</li>
-                    <li className={`${styles.landing__navlinks}`}>item 4</li>
-                </ul>
+                {
+                    width >= 1024 && (
+                        <ul className="flex-1 justify-end items-center gap-10 hidden md:flex">
+                            {
+                                solutions.slice(0, 4).map(solution => (
+                                    <li className={`${styles.landing__navlinks}`}>{solution.tittle_s}</li>
+                                ))
+                            }
+                        </ul>
+                    )
+                }
             </header>
             <div
                 className={`${styles.landing__banner} mb-5`}
@@ -72,6 +87,8 @@ export const Landing = () => {
                     </CarouselSection>
                 ))
             }
+
+            <Footer logo={companyByAlias.id ? companyByAlias.logo : ciomprixLogo} company={companyByAlias.name ? companyByAlias.name : "Ciomprix"} />
         </div>
     )
 }

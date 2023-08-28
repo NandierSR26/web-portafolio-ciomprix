@@ -115,10 +115,10 @@ export const Contents = () => {
                 ))}
 
                 <div
-                    className="flex flex-col items-center justify-center gap-10 w-full flex-1 sm:max-w-md p-5 bg-dark-purple rounded-2xl shadow-xl cursor-pointer"
+                    className="flex flex-col items-center justify-center gap-10 w-full flex-1 sm:min-w-[380px] p-5 bg-dark-purple rounded-2xl shadow-xl cursor-pointer"
                     onClick={() => navigate('/admin/create-content')}
                 >
-                    <FontAwesomeIcon icon={faPlus} className="text-orange-500 text-7xl" />
+                    <FontAwesomeIcon icon={faPlus} className="text-orange-500 text-center text-7xl" />
                     <p className="text-3xl text-orange-500 font-bold">Agregar contenido</p>
                 </div>
             </section>

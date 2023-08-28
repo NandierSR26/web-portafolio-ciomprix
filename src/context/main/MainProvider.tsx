@@ -26,9 +26,13 @@ export const MainProvider = ({ children }: MainProviderProps) => {
 
     const [companies, setCompanies] = useState<ICompany[]>([])
     const [companyByID, setCompanyByID] = useState<ICompany>({} as ICompany)
+    const [companyByAlias, setCompanyByAlias] = useState<ICompany>({} as ICompany)
 
     const [users, setUsers] = useState<IUser[]>([])
     const [userByID, setUserByID] = useState<IUser>({} as IUser)
+
+    const [videoModalOpen, setVideoModalOpen] = useState(false)
+    const [videoContentUrl, setVideoContentUrl] = useState<string | null>(null)
 
     // SOLUTIONS
     const getSolutions = async () => {
@@ -240,6 +244,16 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         }
     }
 
+    const getCompanyByAlias = async(alias:string) => {
+        try {
+            const { data:{ data } } = await companiesApi.getCompanyByAlias(alias)
+            console.log(data)
+            setCompanyByAlias(data)
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     const createCompany = async (dataValues: FormData) => {
         try {
             const { data } = await companiesApi.createCompany(dataValues)
@@ -326,6 +340,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     }
 
 
+
     useEffect(() => {
         getSolutions()
         getCategories()
@@ -343,11 +358,16 @@ export const MainProvider = ({ children }: MainProviderProps) => {
             contentsByCategory,
             companies,
             companyByID,
+            companyByAlias,
             users,
             userByID,
             fetching,
+            videoModalOpen,
+            videoContentUrl,
 
             setFetching,
+            setVideoContentUrl,
+            setVideoModalOpen,
             getSolutions,
             getSolutionByID,
             createSolution,
@@ -367,6 +387,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
             deleteContent,
             getCompanies,
             getCompanyByID,
+            getCompanyByAlias,
             createCompany,
             updateCompany,
             deleteCompany,

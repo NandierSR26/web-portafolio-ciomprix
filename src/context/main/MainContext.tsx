@@ -22,13 +22,19 @@ interface MainContextProps {
     // empresas
     companies: ICompany[];
     companyByID: ICompany;
+    companyByAlias: ICompany;
 
     // usuarios
     users: IUser[];
     userByID: IUser;
 
+    videoModalOpen: boolean;
+    videoContentUrl: string | null;
+
     // METODOS
     setFetching: React.Dispatch<React.SetStateAction<boolean>>;
+    setVideoModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+    setVideoContentUrl: React.Dispatch<React.SetStateAction<string | null>>;
 
     // solutions
     getSolutions: () => Promise<void>;
@@ -56,6 +62,7 @@ interface MainContextProps {
     // empresas
     getCompanies: () => Promise<void>
     getCompanyByID: (id: number) => Promise<void>
+    getCompanyByAlias: (alias: string) => Promise<void>
     createCompany: (data: FormData) => Promise<void>
     updateCompany: (id: number, data: FormData) => Promise<void>
     deleteCompany: (id: number) => Promise<void>

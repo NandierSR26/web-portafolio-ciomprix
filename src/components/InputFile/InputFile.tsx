@@ -29,7 +29,7 @@ export const InputFile = ({ image, error, onChange, name, label }: InputFileProp
 
                 {image?.file ? (
                     <>
-                        <p className="text-2xl text-green-800 font-semibold">Imagen seleccionada</p>
+                        <p className="text-2xl text-green-800 font-semibold">Archivo seleccionado</p>
                     </>
                 ) : (
                     <>

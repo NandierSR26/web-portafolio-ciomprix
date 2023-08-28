@@ -21,7 +21,7 @@ export const AdminCard = ({ id, title, status, type, deleteElement }: AdminCardP
 
     return (
         <div
-            className="flex flex-col justify-between w-full flex-1 min-w-[250px] max-w-[380px] p-5 bg-white rounded-2xl shadow-xl"
+            className="flex flex-col justify-between w-full flex-1 sm:w-[380px] min-w-[380px] p-5 bg-white rounded-2xl shadow-xl"
         >
             <div className="flex justify-between w-full mb-16">
                 <div

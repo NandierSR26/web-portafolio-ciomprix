@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useMainContext } from '../../context'
-import { ContentCard } from '../../components'
+import { ContentCard, ModalVideo } from '../../components'
 
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 
 import ciomprixLogo from '/images/ciomprix-logo-gray.svg'
 import styles from './CategoryDetail.module.scss'
+import useScreenSize from '../../hooks/useScreenSize'
 
 export const CategoryDetail = () => {
 
     const { id } = useParams()
-    const { getCategoryById, categoryByID, getSolutionByID, solutionByID, getContentByCategory, contentsByCategory, fetching } = useMainContext()
+    const { solutions, getCategoryById, categoryByID, getSolutionByID, solutionByID, getContentByCategory, contentsByCategory, fetching } = useMainContext()
+    const { width } = useScreenSize()
 
     useEffect(() => {
         getCategoryById(Number(id))
@@ -28,20 +30,25 @@ export const CategoryDetail = () => {
     if (fetching) return <h1 className="text-black">Cargando...</h1>
 
     return (
-        <main>
+        <main className="relative">
             <header className="flex justify-between items-center px-7 md:px-28 py-5 bg-light-gray">
                 <figure>
                     <img src={ciomprixLogo} alt="logo" />
                 </figure>
 
-                <div className="flex-1"></div>
+                {/* <div className="flex-1"></div> */}
 
-                <ul className="flex flex-1 justify-between items-center text-gray-500 gap-10">
-                    <li>item 1</li>
-                    <li>item 2</li>
-                    <li>item 3</li>
-                    <li>item 4</li>
-                </ul>
+                {
+                    width >= 1024 && (
+                        <ul className="flex-1 justify-end items-center gap-10 hidden md:flex">
+                            {
+                                solutions.slice(0, 4).map(solution => (
+                                    <li className={`${styles.landing__navlinks}`}>{solution.tittle_s}</li>
+                                ))
+                            }
+                        </ul>
+                    )
+                }
             </header>
 
             <section
@@ -71,6 +78,8 @@ export const CategoryDetail = () => {
                     }
                 </div>
             </section>
+
+            <ModalVideo />
         </main>
     )
 }

@@ -34,7 +34,7 @@ export const ContentsForm = () => {
     const [contentVideo, setContentVideo] = useState<FormImage | null>(null)
     const [contentVideoError, setContentVideoError] = useState<string | null>(null)
 
-    const [contentVideoOrigin, setContentVideoOrigin] = useState(0)
+    const [contentVideoOrigin, setContentVideoOrigin] = useState(1)
     const [isToggleActive, setIsToggleActive] = useState(true)
 
     const contentHandleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
@@ -84,7 +84,7 @@ export const ContentsForm = () => {
     useEffect(() => {
         if(!contentsByID.id) return
 
-        setContentVideoOrigin(contentsByID.vid_sc_origin ? contentsByID.vid_sc_origin : 0)
+        // setContentVideoOrigin(contentsByID.vid_sc_origin ? contentsByID.vid_sc_origin : 0)
         if(contentsByID.active_sc === 0) setIsToggleActive(false)
         if(contentsByID.active_sc === 1) setIsToggleActive(true)
         // console.log(contentsByID)
@@ -137,9 +137,10 @@ export const ContentsForm = () => {
                         videoOption === 'video - url' ? formData.append('vid_sc', vid_sc as string) : contentVideo && formData.append('vid_sc', contentVideo?.file)
                         formData.append('active_sc', isToggleActive ? '1' : '0')
                         formData.append('id_c', id_c.toString())
-                        contentVideoOrigin && formData.append('vid_sc_origin', contentVideoOrigin.toString())
+                        formData.append('vid_sc_origin', contentVideoOrigin.toString())
 
                         // formData.forEach((value, key) => console.log({key, value}))
+                        // return
                         
                         createContent(formData)
                         navigate(-1)
