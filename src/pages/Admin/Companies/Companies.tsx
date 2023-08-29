@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { AdminCard, AdminLayout } from '../../../components'
+import { AdminCard, AdminLayout, Loader } from '../../../components'
 import { useMainContext } from '../../../context'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -37,7 +37,7 @@ export const Companies = () => {
         setFetching(false)
     }, [])
 
-    if (fetching || !companies) return <h1>Cargando...</h1>
+    if (fetching || !companies) return <Loader />
 
     return (
         <AdminLayout logo={false} currentPageName='Administrador de compañias'>

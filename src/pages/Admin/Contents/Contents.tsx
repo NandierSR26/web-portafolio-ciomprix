@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { AdminCard, AdminLayout } from '../../../components'
+import { AdminCard, AdminLayout, Loader } from '../../../components'
 import { InputSelect } from '../../../components/InputSelect'
 import { useMainContext } from '../../../context'
 import { IContent } from '../../../interfaces'
@@ -89,7 +89,7 @@ export const Contents = () => {
             .then(contents => setFetching(false))
     }, [selectedCategory])
 
-    if (fetching) return <h1>Cargando...</h1>
+    if (fetching) return <Loader />
 
 
     return (

@@ -2,7 +2,7 @@ import React, { ChangeEvent, useEffect, useState } from 'react'
 import { useFormPurpose } from '../../../hooks/useFormPurpose'
 import { useMainContext } from '../../../context'
 import { useNavigate, useParams } from 'react-router-dom'
-import { AdminLayout, Input, InputFile } from '../../../components'
+import { AdminLayout, Input, InputFile, Loader } from '../../../components'
 import { FormPurpose } from '../../../utils/enums'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -91,9 +91,9 @@ export const CompaniesForm = () => {
         if (companyImg) setCompanyImgError(null)
     }, [companyImg])
 
-    if (!formPurpose || !initialValues) return <h1>Cargando...</h1>
-    if(formPurpose === FormPurpose.EDITION && !companyByID.id) return <h1>Cargando...</h1>
-    if (fetching) return <h1>Cargando...</h1>
+    if (!formPurpose || !initialValues) return <Loader />
+    if(formPurpose === FormPurpose.EDITION && !companyByID.id) return <Loader />
+    if (fetching) return <Loader />
 
     return (
         <AdminLayout logo={false} currentPageName={formPurpose === FormPurpose.CREATION ? 'Nueva empresa' : 'Editar empresa'}>

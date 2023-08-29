@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { CategoriesCard, Footer, SolutionMiniCard } from '../../components'
+import { CategoriesCard, Footer, Loader, SolutionMiniCard } from '../../components'
 import { CarouselSection } from '../../components/CarouselSection'
 import { ICategory } from '../../interfaces'
 import { useMainContext } from '../../context'
@@ -29,7 +29,7 @@ export const Landing = () => {
         getCompanyByAlias(alias).then(company => setFetching(false))
     }, [alias])
 
-    if (fetching) return <h1>Cargando...</h1>
+    if (fetching) return <Loader />
 
     return (
         <div>
@@ -85,6 +85,7 @@ export const Landing = () => {
                 {
                     solutions.map(({ id, img_s, tittle_s }) => (
                         <SolutionMiniCard
+                            key={id}
                             idSolution={id as number}
                             image={img_s as string}
                             title={tittle_s as string}

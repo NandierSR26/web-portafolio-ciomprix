@@ -3,12 +3,13 @@ import styles from './ModalVideo.module.scss'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { useMainContext } from '../../context'
+import { Loader } from '../Loader'
 
 export const ModalVideo = () => {
 
     const { videoModalOpen, setVideoModalOpen, setVideoContentUrl, videoContentUrl } = useMainContext()
 
-    if(!videoContentUrl && videoModalOpen) return <h1>Cargando...</h1>
+    if(!videoContentUrl && videoModalOpen) return <Loader />
 
     return (
         <>

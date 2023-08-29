@@ -1,5 +1,5 @@
 import React, { useState, useEffect, ChangeEvent } from 'react'
-import { AdminLayout, Input, InputFile, InputSelect, Textarea } from '../../../components'
+import { AdminLayout, Input, InputFile, InputSelect, Loader, Textarea } from '../../../components'
 import { useFormPurpose } from '../../../hooks/useFormPurpose'
 import { useMainContext } from '../../../context'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -122,9 +122,9 @@ export const ContentsForm = () => {
         }
     }, [formPurpose, contentsByID])
 
-    if (!formPurpose || !initialValues) return <h1>Cargando...</h1>
-    if (formPurpose === FormPurpose.EDITION && !contentsByID.id) return <h1>Cargando...</h1>
-    if (fetching) return <h1>Cargando</h1>
+    if (!formPurpose || !initialValues) return <Loader />
+    if (formPurpose === FormPurpose.EDITION && !contentsByID.id) return <Loader />
+    if (fetching) return <Loader />
 
     return (
         <AdminLayout logo={false} currentPageName={formPurpose === FormPurpose.CREATION ? 'Nuevo contenido' : 'Editar contenido'}>

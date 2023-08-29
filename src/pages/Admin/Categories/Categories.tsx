@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { AdminCard, AdminLayout } from '../../../components'
+import { AdminCard, AdminLayout, Loader } from '../../../components'
 import { ICategory, ISolutions } from '../../../interfaces'
 import { useMainContext } from '../../../context'
 import { InputSelect } from '../../../components/InputSelect'
@@ -64,7 +64,7 @@ export const Categories = () => {
             .catch(error => setFetching(false))
     }, [selectedSolution])
 
-    if (!solutions.length || fetching) return <h1>Cargando...</h1>
+    if (!solutions.length || fetching) return <Loader />
 
     return (
         <AdminLayout logo={false} currentPageName='Administrador de categorias'>

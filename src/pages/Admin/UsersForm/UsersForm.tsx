@@ -4,7 +4,7 @@ import { useMainContext } from '../../../context'
 import { useNavigate, useParams } from 'react-router-dom'
 import * as Yup from 'yup'
 import { FormPurpose } from '../../../utils/enums'
-import { AdminLayout, Input } from '../../../components'
+import { AdminLayout, Input, Loader } from '../../../components'
 import { Formik } from 'formik'
 
 export const UsersForm = () => {
@@ -29,8 +29,8 @@ export const UsersForm = () => {
         if (userByID.active_u === 1) setIsToggleActive(true)
     }, [userByID])
 
-    if (!formPurpose) return <h1>Cargando...</h1>
-    if (formPurpose === FormPurpose.EDITION && !userByID.id) return <h1>Cargando...</h1>
+    if (!formPurpose) return <Loader />
+    if (formPurpose === FormPurpose.EDITION && !userByID.id) return <Loader />
 
     return (
         <AdminLayout logo={false} currentPageName={formPurpose === FormPurpose.CREATION ? 'Nuevo usuario' : 'Editar usuario'}>

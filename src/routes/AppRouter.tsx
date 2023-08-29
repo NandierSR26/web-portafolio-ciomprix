@@ -8,13 +8,14 @@ import { useAuthContext } from '../context/auth/AuthContext'
 import { PublicRoutes } from './PublicRoutes'
 import { useMainContext } from '../context'
 import { Navigate } from 'react-router-dom'
+import { Loader } from '../components'
 
 export const AppRouter = () => {
 
     const { loading } = useAuthContext()
     const { companies } = useMainContext()
 
-    if (loading || !companies.length) return <h1>Cargando...</h1>
+    if (loading || !companies.length) return <Loader />
 
     return (
         <Routes>

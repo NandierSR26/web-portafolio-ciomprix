@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
-import { AdminLayout, Input, InputFile, Textarea } from '../../../components'
+import { AdminLayout, Input, InputFile, Loader, Textarea } from '../../../components'
 import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
@@ -123,9 +123,9 @@ export const SolutionsForm = () => {
 
 
 
-    if (!formPurpose || !initialValues) return <h1>Cargando...</h1>
-    if (formPurpose === FormPurpose.EDITION && !solutionByID) return <h1>Cargando...</h1>
-    if (fetching) return <h1>Cargando...</h1>
+    if (!formPurpose || !initialValues) return <Loader />
+    if (formPurpose === FormPurpose.EDITION && !solutionByID) return <Loader />
+    if (fetching) return <Loader />
 
     return (
         <AdminLayout logo={false} currentPageName={formPurpose === FormPurpose.CREATION ? 'Nueva solución' : 'Editar solución'}>

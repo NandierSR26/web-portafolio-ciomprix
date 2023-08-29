@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useMainContext } from '../../../context'
-import { AdminCard, AdminLayout } from '../../../components'
+import { AdminCard, AdminLayout, Loader } from '../../../components'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faPlus } from '@fortawesome/free-solid-svg-icons'
@@ -36,7 +36,7 @@ export const Users = () => {
         getUsers()
     }, [])
 
-    if (fetching) return <h1>Cargando...</h1>
+    if (fetching) return <Loader />
 
     return (
         <AdminLayout logo={false} currentPageName='Administrador de usuarios'>

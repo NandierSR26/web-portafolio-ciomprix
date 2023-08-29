@@ -3,7 +3,7 @@ import { useFormPurpose } from '../../../hooks/useFormPurpose';
 import { useMainContext } from '../../../context';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FormPurpose } from '../../../utils/enums';
-import { AdminLayout, Input, InputFile, InputSelect, Textarea } from '../../../components';
+import { AdminLayout, Input, InputFile, InputSelect, Loader, Textarea } from '../../../components';
 import { Formik } from 'formik';
 import { FormImage } from '../../../interfaces/others';
 import * as Yup from 'yup'
@@ -86,9 +86,9 @@ export const CategoriesForm = () => {
         }
     }, [categoryByID, formPurpose])
 
-    if (!formPurpose || !initialValues) return <h1>Cargando...</h1>
-    if (formPurpose === FormPurpose.EDITION && !categoryByID.id) return <h1>Cargando...</h1>
-    if (fetching) return <h1>Cargando...</h1>
+    if (!formPurpose || !initialValues) return <Loader />
+    if (formPurpose === FormPurpose.EDITION && !categoryByID.id) return <Loader />
+    if (fetching) return <Loader />
 
     return (
         <AdminLayout logo={false} currentPageName={formPurpose === FormPurpose.CREATION ? 'Nueva categoria' : 'Editar categoria'}>
