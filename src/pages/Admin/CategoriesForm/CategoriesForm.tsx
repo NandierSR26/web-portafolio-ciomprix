@@ -143,7 +143,7 @@ export const CategoriesForm = () => {
                         <Input
                             type='text'
                             name='tittle_c'
-                            label='Titulo'
+                            label='Título'
                             onChange={handleChange}
                             value={values.tittle_c}
                             touched={touched.tittle_c}
@@ -153,7 +153,7 @@ export const CategoriesForm = () => {
                         <Textarea
                             type='text'
                             name='description_c'
-                            label={'descripcion'}
+                            label={'descripción'}
                             onChange={handleChange}
                             touched={touched.description_c}
                             errors={errors.description_c}
@@ -163,7 +163,7 @@ export const CategoriesForm = () => {
 
                         <InputFile
                             name='img_c'
-                            label='Imagen'
+                            label='Portada'
                             image={categoryImg}
                             error={categoryImgError}
                             onChange={categoryHandleChange}

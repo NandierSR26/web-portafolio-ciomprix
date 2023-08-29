@@ -18,6 +18,8 @@ export const CategoryDetail = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
+        window.scrollTo({top: 0, left: 0})
+
         getCategoryById(Number(id))
 
         if (!alias) return
@@ -35,7 +37,7 @@ export const CategoryDetail = () => {
 
     return (
         <main className="relative">
-            <header className="flex justify-between items-center gap-32 px-7 md:px-28 py-5 bg-light-gray">
+            <header className={`bg-[${companyByAlias.color2}] flex justify-between items-center gap-32 px-7 md:px-28 py-5`}>
                 <img
                     src={companyByAlias.id ? import.meta.env.VITE_API_URL_DEVELOPMENT + '/' + companyByAlias.logo : ciomprixLogo}
                     className='w-[160px] h-[40px] md:w-[250px] md:h-[50px]'

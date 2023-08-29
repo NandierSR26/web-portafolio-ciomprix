@@ -176,7 +176,7 @@ export const SolutionsForm = () => {
                             <Input
                                 type='text'
                                 name='tittle_s'
-                                label={'titulo'}
+                                label={'Título'}
                                 onChange={handleChange}
                                 touched={touched.tittle_s}
                                 errors={errors.tittle_s}
@@ -187,7 +187,7 @@ export const SolutionsForm = () => {
                             <Textarea
                                 type='text'
                                 name='description_s'
-                                label={'descripcion'}
+                                label={'descripción'}
                                 onChange={handleChange}
                                 touched={touched.description_s}
                                 errors={errors.description_s}
@@ -197,7 +197,7 @@ export const SolutionsForm = () => {
 
                             <InputFile
                                 name='img_s'
-                                label='Imagen'
+                                label='Icono'
                                 image={solutionImg}
                                 error={solutionImgError}
                                 onChange={solutionImgHandleChange}
@@ -205,7 +205,7 @@ export const SolutionsForm = () => {
 
                             <InputFile
                                 name='img_banner_s'
-                                label='Portada'
+                                label='Banner'
                                 image={solutionBanner}
                                 error={solutionBannerError}
                                 onChange={solutionBannerHandleChange}

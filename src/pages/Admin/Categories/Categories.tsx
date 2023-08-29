@@ -95,7 +95,7 @@ export const Categories = () => {
                     onClick={() => navigate('/admin/create-category')}
                 >
                     <FontAwesomeIcon icon={faPlus} className="text-orange-500 text-7xl" />
-                    <p className="text-3xl text-orange-500 font-bold">Agregar categoria</p>
+                    <p className="text-3xl text-orange-500 font-bold">Agregar categoría</p>
                 </div>
             </section>
         </AdminLayout>

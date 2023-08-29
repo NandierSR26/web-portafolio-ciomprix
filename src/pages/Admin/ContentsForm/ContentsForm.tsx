@@ -195,7 +195,7 @@ export const ContentsForm = () => {
                         <Input
                             type='text'
                             name='tittle_sc'
-                            label='Titulo'
+                            label='Título'
                             onChange={handleChange}
                             value={values.tittle_sc}
                             touched={touched.tittle_sc}
@@ -205,7 +205,7 @@ export const ContentsForm = () => {
                         <Textarea
                             type='text'
                             name='description_sc'
-                            label={'descripcion'}
+                            label={'descripción'}
                             onChange={handleChange}
                             touched={touched.description_sc}
                             errors={errors.description_sc}
@@ -274,7 +274,7 @@ export const ContentsForm = () => {
                         </div>
 
                         <InputSelect
-                            label='Categoria'
+                            label='Categoría'
                             options={categories && categories?.map(category => ({
                                 value: category.id as number,
                                 text: category.tittle_c as string

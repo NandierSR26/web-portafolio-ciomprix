@@ -33,7 +33,7 @@ export const InputFile = ({ image, error, onChange, name, label }: InputFileProp
                     </>
                 ) : (
                     <>
-                        <p className="text-2xl text-gray-400 font-semibold">Agrega un banner para la solución</p>
+                        <p className="text-2xl text-gray-400 font-semibold">Agrega un archivo gráfico</p>
                         <p className="text-base text-gray-600 font-bold">Haz click aqui, o arrastra una imagen dentro del recuadro</p>
                     </>
                 )}

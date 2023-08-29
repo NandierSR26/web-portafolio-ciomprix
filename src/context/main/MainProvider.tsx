@@ -138,7 +138,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     const createCategory = async (dataValues: FormData) => {
         try {
             const { data: { data, message } } = await categoriesApi.createCategory(dataValues)
-            setCategories([...categories, data])
+            setCategoriesBySolution([...categoriesBySolution, data])
 
             toast.success(message)
         } catch (error) {

@@ -76,7 +76,7 @@ export const Landing = () => {
             >
                 <section className="w-full max-w-[1800px] mx-auto px-7 md:px-32 py-16 lg:py-20">
                     <h1 className="title max-w-xs mx-auto lg:max-w-lg 2xl:max-w-3xl lg:mx-0 mb-7 text-center lg:text-left">Conoce nuestro portafolio de servicios</h1>
-                    <p className="subtitle max-w-xs mx-auto lg:max-w-lg 2xl:max-w-3xl lg:mx-0 text-center lg:text-left">La forma de generar aprendizaje mas facil</p>
+                    <p className="subtitle max-w-xs mx-auto lg:max-w-lg 2xl:max-w-3xl lg:mx-0 text-center lg:text-left">La forma de generar aprendizaje más fácil</p>
                 </section>
 
             </div>
