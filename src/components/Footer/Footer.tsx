@@ -11,7 +11,7 @@ export const Footer = ({ logo, company }: FooterProps) => {
         <footer className="w-full bg-[#333333]">
             <div className="flex items-center gap-5 px-7 md:px-28 max-w-[1800px] mx-auto py-5">
                 <figure>
-                    <img src={`${import.meta.env.VITE_API_URL_DEVELOPMENT}/${logo}`} className="w-[160px] h-[40px] md:w-[250px] md:h-[50px]" alt="logo" />
+                    <img src={`${import.meta.env.VITE_API_URL_PROD}/${logo}`} className="w-[160px] h-[40px] md:w-[250px] md:h-[50px]" alt="logo" />
                 </figure>
 
                 <p className="flex-1 text-end text-white">

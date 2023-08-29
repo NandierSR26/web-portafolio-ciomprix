@@ -8,7 +8,7 @@ import Users from './users'
 export const api = () => {
 
     const axiosConfig = axios.create({
-        baseURL: 'http://localhost:8081/api',
+        baseURL: `${import.meta.env.VITE_API_URL_PROD}/api`,
         // headers: {
         //     "Content-Type": "multipart/form-data"
         // }

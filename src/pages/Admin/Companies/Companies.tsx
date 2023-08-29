@@ -47,7 +47,7 @@ export const Companies = () => {
                         <AdminCard
                             id={company.id}
                             key={company.id}
-                            title={company.name}
+                            title={company.nombre}
                             status={company.active}
                             deleteElement={handleDeleteCompany}
                             type='company'

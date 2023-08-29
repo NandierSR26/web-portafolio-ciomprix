@@ -39,7 +39,7 @@ export const CategoryDetail = () => {
         <main className="relative">
             <header className={`bg-[${companyByAlias.color2}] flex justify-between items-center gap-32 px-7 md:px-28 py-5`}>
                 <img
-                    src={companyByAlias.id ? import.meta.env.VITE_API_URL_DEVELOPMENT + '/' + companyByAlias.logo : ciomprixLogo}
+                    src={companyByAlias.id ? import.meta.env.VITE_API_URL_PROD + '/' + companyByAlias.logo : ciomprixLogo}
                     className='w-[160px] h-[40px] md:w-[250px] md:h-[50px]'
                     alt="logo"
                 />
@@ -61,7 +61,7 @@ export const CategoryDetail = () => {
 
             <section
                 style={{
-                    backgroundImage: `url(${solutionByID ? import.meta.env.VITE_API_URL_DEVELOPMENT + '/' + solutionByID.img_banner_s : ''})`,
+                    backgroundImage: `url(${solutionByID ? import.meta.env.VITE_API_URL_PROD + '/' + solutionByID.img_banner_s : ''})`,
                 }}
                 className={`${styles.category_detail__banner} `}
             >

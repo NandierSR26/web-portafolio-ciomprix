@@ -59,6 +59,7 @@ export const Categories = () => {
         if (!selectedSolution) return
 
         localStorage.setItem('last-selected-solution', JSON.stringify({ id: selectedSolution }))
+        setFetching(true)
         getCategoryByIdSolution(selectedSolution)
             .then(categories => setFetching(false))
             .catch(error => setFetching(false))

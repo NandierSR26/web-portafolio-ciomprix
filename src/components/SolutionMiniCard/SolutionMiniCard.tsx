@@ -19,7 +19,7 @@ export const SolutionMiniCard = ({ image, title, companyByAlias, idSolution }: S
             }}
         >
             <img 
-                src={`${import.meta.env.VITE_API_URL_DEVELOPMENT}/${image}`}
+                src={`${import.meta.env.VITE_API_URL_PROD}/${image}`}
                 className="mb-5 mx-auto w-[110px] h-[110px]"
                 alt="solution_image" 
             />

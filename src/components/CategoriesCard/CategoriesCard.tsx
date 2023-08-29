@@ -11,7 +11,7 @@ export const CategoriesCard = ({ category }: CategoriesCardProps) => {
     return (
         <div
             style={{
-                backgroundImage: `url(${import.meta.env.VITE_API_URL_DEVELOPMENT}/${category.img_c})`,
+                backgroundImage: `url(${import.meta.env.VITE_API_URL_PROD}/${category.img_c})`,
                 backgroundSize: 'cover'
             }}
             className={`${styles.category__card} bg-center bg-cover bg-no-repeat rounded-3xl text-white h-[450px] w-[250px] flex-shrink-0 relative overflow-hidden`}

@@ -184,7 +184,8 @@ export const ContentsForm = () => {
                         formData.append('id_c', id_c.toString())
                         formData.append('vid_sc_origin', contentVideoOrigin.toString())
 
-                        updateContent(Number(id_content), formData)
+                        setFetching(true)
+                        updateContent(Number(id_content), formData).then(content => setFetching(false))
                     }
 
                     console.log({ tittle_sc, description_sc, vid_sc, id_c })

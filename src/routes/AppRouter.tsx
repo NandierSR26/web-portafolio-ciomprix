@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { Landing } from '../pages'
 import { CategoryDetail } from '../pages/CategoryDetail'
@@ -9,18 +9,28 @@ import { PublicRoutes } from './PublicRoutes'
 import { useMainContext } from '../context'
 import { Navigate } from 'react-router-dom'
 import { Loader } from '../components'
+import { ICompany } from '../interfaces'
 
 export const AppRouter = () => {
 
     const { loading } = useAuthContext()
     const { companies } = useMainContext()
 
-    if (loading || !companies.length) return <Loader />
+    const [mainCompany, setMainCompany] = useState<ICompany | null>(null)
+
+    useEffect(() => {
+        if(!companies.length) return
+      
+        setMainCompany(companies[0])
+    }, [companies])
+    
+
+    if (loading || !mainCompany) return <Loader />
 
     return (
         <Routes>
             <Route element={<PublicRoutes />}>
-                <Route path="/" element={<Navigate to={`/${companies[0].alias}`} />} />
+                <Route path="/" element={<Navigate to={`/${mainCompany.alias}`} />} />
                 <Route path="/:alias" element={<Landing />} />
                 <Route path="/:alias/category/:id" element={<CategoryDetail />} />
                 <Route path="/admin/login" element={<Login />} />

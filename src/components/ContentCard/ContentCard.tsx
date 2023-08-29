@@ -15,7 +15,7 @@ export const ContentCard = ({ content }: ContentCardProps) => {
     return (
         <div
             style={{
-                backgroundImage: `url(${import.meta.env.VITE_API_URL_DEVELOPMENT}/${content.img_sc})`,
+                backgroundImage: `url(${import.meta.env.VITE_API_URL_PROD}/${content.img_sc})`,
                 backgroundPosition: 'center'
             }}
             className={`${styles.content__card} bg-cover w-full h-[370px] rounded-3xl relative overflow-hidden`}
@@ -37,7 +37,7 @@ export const ContentCard = ({ content }: ContentCardProps) => {
                         <button
                             className='w-24 py-1 mb-8 bg-blue-500 px-6 text-white rounded-full text-l text-center openMedium transition-all duration-200 hover:scale-110 hover:text-white'
                             onClick={() => {
-                                setVideoContentUrl(import.meta.env.VITE_API_URL_DEVELOPMENT + '/' + content.vid_sc)
+                                setVideoContentUrl(import.meta.env.VITE_API_URL_PROD + '/' + content.vid_sc)
                                 setVideoModalOpen(true)
                             }}
                         >

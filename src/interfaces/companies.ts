@@ -1,6 +1,6 @@
 export interface ICompany {
     id: number;
-    name: string;
+    nombre: string;
     alias: string;
     logo: string;
     color1: string;

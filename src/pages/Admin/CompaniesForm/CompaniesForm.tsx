@@ -9,7 +9,7 @@ import * as Yup from 'yup'
 import { FormImage } from '../../../interfaces/others'
 
 interface FormValues {
-    name: string;
+    nombre: string;
     alias: string;
     color1: string;
     color2: string;
@@ -62,11 +62,12 @@ export const CompaniesForm = () => {
     }, [companyByID])
 
     useEffect(() => {
+        console.log(companyByID)
         if(!formPurpose) return
 
         if(formPurpose === FormPurpose.CREATION) {
             setInitialValues({
-                name: '',
+                nombre: '',
                 alias: '',
                 color1: '#000000',
                 color2: '#000000',
@@ -78,7 +79,7 @@ export const CompaniesForm = () => {
 
         if(formPurpose === FormPurpose.EDITION) {
             setInitialValues({
-                name: companyByID.name,
+                nombre: companyByID.nombre,
                 alias: companyByID.alias,
                 color1: companyByID.color1,
                 color2: companyByID.color2,
@@ -92,7 +93,7 @@ export const CompaniesForm = () => {
     }, [companyImg])
 
     if (!formPurpose || !initialValues) return <Loader />
-    if(formPurpose === FormPurpose.EDITION && !companyByID.id) return <Loader />
+    if(formPurpose === FormPurpose.EDITION && !companyByID) return <Loader />
     if (fetching) return <Loader />
 
     return (
@@ -101,11 +102,11 @@ export const CompaniesForm = () => {
                 initialValues={initialValues}
                 validationSchema={
                     Yup.object({
-                        name: Yup.string().required("Dato requerido"),
+                        nombre: Yup.string().required("Dato requerido"),
                         alias: Yup.string().required("Dato requerido"),
                     })
                 }
-                onSubmit={({ name, alias, color1, color2, active }) => {
+                onSubmit={({ nombre, alias, color1, color2, active }) => {
 
                     if (formPurpose === FormPurpose.CREATION) {
 
@@ -115,21 +116,26 @@ export const CompaniesForm = () => {
                         }
 
                         const formData = new FormData()
-                        formData.append('name', name)
+                        formData.append('nombre', nombre)
                         formData.append('alias', alias)
                         formData.append('logo', companyImg.file)
                         formData.append('color1', color1)
                         formData.append('color2', color2)
                         formData.append('active', isToggleActive ? '1' : '0')
 
-                        createCompany(formData)
-                        navigate(-1)
+                        // formData.forEach((value, key) => {
+                        //     console.log({key, value})
+                        // })
+
+                        setFetching(true)
+                        createCompany(formData).then(company => setFetching(false))
+                        // navigate(-1)
                         return
                     }
 
                     if(formPurpose === FormPurpose.EDITION) {
                         const formData = new FormData()
-                        formData.append('name', name)
+                        formData.append('nombre', nombre)
                         formData.append('alias', alias)
                         companyImg && formData.append('logo', companyImg.file)
                         formData.append('color1', color1)
@@ -150,12 +156,12 @@ export const CompaniesForm = () => {
                     <form className="flex flex-col gap-5 max-w-2xl mx-auto mt-20 bg-white p-10 rounded-2xl" onSubmit={handleSubmit}>
                         <Input
                             type='text'
-                            name='name'
+                            name='nombre'
                             label={'Nombre'}
                             onChange={handleChange}
-                            touched={touched.name}
-                            errors={errors.name}
-                            value={values.name}
+                            touched={touched.nombre}
+                            errors={errors.nombre}
+                            value={values.nombre}
                             className="text-black outline-none"
                         />
 

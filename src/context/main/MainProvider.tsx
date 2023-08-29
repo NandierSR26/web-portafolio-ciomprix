@@ -138,7 +138,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     const createCategory = async (dataValues: FormData) => {
         try {
             const { data: { data, message } } = await categoriesApi.createCategory(dataValues)
-            setCategoriesBySolution([...categoriesBySolution, data])
+            setCategoriesBySolution([...categoriesBySolution, data[0]])
 
             toast.success(message)
         } catch (error) {
@@ -291,7 +291,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         try {
             const { data: { data, message } } = await companiesApi.updateCompany(id, dataValues)
 
-            const index = companies.findIndex(company => company.id === data.id)
+            const index = companies.findIndex(company => company.id === id)
             companies[index] = data
 
             setCompanyByID(data)
