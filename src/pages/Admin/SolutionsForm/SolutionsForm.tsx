@@ -64,7 +64,7 @@ export const SolutionsForm = () => {
             }
             reader.readAsDataURL(file)
         } else {
-            setSolutionImg(null)
+            setSolutionBanner(null)
         }
     }
 
