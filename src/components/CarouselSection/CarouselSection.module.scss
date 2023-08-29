@@ -3,10 +3,13 @@
     display: flex;
     align-items: center;
     justify-content: start;
-    gap: 40px;
     width: 100%;
     overflow: scroll;
     scroll-snap-type: x mandatory;
+}
+
+.carousel__items__container > div:not(:last-child) {
+    margin-right: 40px;
 }
 
 .carousel__items__container::-webkit-scrollbar {

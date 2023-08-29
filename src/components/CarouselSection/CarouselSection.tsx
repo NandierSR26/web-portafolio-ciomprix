@@ -3,7 +3,7 @@ import useScreenSize from '../../hooks/useScreenSize';
 import { ISolutions } from '../../interfaces';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
+import { faAlignLeft, faAngleLeft, faAngleRight, faArrowLeft, faArrowRight, faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons'
 import { identifyDevice } from '../../utils/deviceIdentify';
 
 import styles from './CarouselSection.module.scss'
@@ -63,6 +63,15 @@ export const CarouselSection = ({ children, title, className, element }: Carouse
         }
     }
 
+    const handleClickLeft = () => {
+
+        carouselRef.current?.scrollTo({left:  carouselRef.current?.scrollLeft - 290})
+    }
+
+    const handleClickRight = () => {
+        carouselRef.current?.scrollTo({left: carouselRef.current?.scrollLeft + 290})
+    }
+
     useEffect(() => {
         function handleResize() {
             setWidthScreen(window.innerWidth);
@@ -75,7 +84,24 @@ export const CarouselSection = ({ children, title, className, element }: Carouse
 
     return (
         <section className={`w-full px-7 md:px-28 max-w-[1500px] my-24 mx-auto text-black ${className}`} id={`section-${element.id}`}>
-            <h3 className='text-3xl lg:text-4xl font-medium'>{title}</h3>
+            <div className="flex items-center justify-between gap-5">
+                <h3 className='text-3xl lg:text-4xl font-medium'>{title}</h3>
+
+                <div className="flex items-center gap-3">
+                    <figure 
+                        className="bg-gray-600 rounded-md w-8 h-8 grid place-items-center cursor-pointer"
+                        onClick={() => handleClickLeft() }
+                    >
+                        <FontAwesomeIcon icon={faAngleLeft} className="text-white text-xl font-bold" />
+                    </figure>
+                    <figure 
+                        className="bg-gray-600 rounded-md w-8 h-8 grid place-items-center cursor-pointer"
+                        onClick={() => handleClickRight() }
+                    >
+                        <FontAwesomeIcon icon={faAngleRight} className="text-white text-xl font-bold" />
+                    </figure>
+                </div>
+            </div>
 
             <hr className='border-black my-4' />
             <div
