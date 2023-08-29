@@ -11,7 +11,7 @@ import * as Yup from 'yup'
 interface FormValues {
     tittle_c: string;
     description_c: string;
-    active_c: string;
+    active_c: number;
     id_s: number;
 }
 
@@ -26,6 +26,7 @@ export const CategoriesForm = () => {
     const [categoryImgError, setCategoryImgError] = useState<string | null>(null)
 
     const [isToggleActive, setIsToggleActive] = useState(true)
+    const [initialValues, setInitialValues] = useState<FormValues | null>(null)
 
     const categoryHandleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
         const reader = new FileReader()
@@ -47,7 +48,12 @@ export const CategoriesForm = () => {
     useEffect(() => {
         if (!id_category) return
 
-        getCategoryById(Number(id_category)).then(category => setFetching(false))
+        setFetching(true)
+        getCategoryById(Number(id_category)).then(category => {
+            setTimeout(() => {
+                setFetching(false)
+            }, 1000)
+        })
     }, [])
 
     useEffect(() => {
@@ -57,19 +63,37 @@ export const CategoriesForm = () => {
         if (categoryByID?.active_c === 1) setIsToggleActive(true)
     }, [categoryByID])
 
-    if (!formPurpose) return <h1>Cargando...</h1>
+    useEffect(() => {
+        
+        if (formPurpose === FormPurpose.CREATION) {
+            setInitialValues({
+                tittle_c: '',
+                description_c: '',
+                active_c: 0,
+                id_s: 0
+            })
+        }
+        
+        if (!formPurpose || !categoryByID.id) return
+        
+        if (formPurpose === FormPurpose.EDITION) {
+            setInitialValues({
+                tittle_c: categoryByID.tittle_c,
+                description_c: categoryByID.description_c,
+                active_c: categoryByID.active_c,
+                id_s: categoryByID.id_s,
+            })
+        }
+    }, [categoryByID, formPurpose])
+
+    if (!formPurpose || !initialValues) return <h1>Cargando...</h1>
     if (formPurpose === FormPurpose.EDITION && !categoryByID.id) return <h1>Cargando...</h1>
     if (fetching) return <h1>Cargando...</h1>
 
     return (
         <AdminLayout logo={false} currentPageName={formPurpose === FormPurpose.CREATION ? 'Nueva categoria' : 'Editar categoria'}>
             <Formik
-                initialValues={{
-                    tittle_c: categoryByID.tittle_c ? categoryByID.tittle_c : '',
-                    description_c: categoryByID.description_c ? categoryByID.description_c : '',
-                    id_s: categoryByID.id_s ? categoryByID.id_s : '',
-                    active_c: categoryByID.id ? categoryByID.active_c : ''
-                } as FormValues}
+                initialValues={initialValues as FormValues}
                 validationSchema={
                     Yup.object({
                         tittle_c: Yup.string().required('Dato requerido'),

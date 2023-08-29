@@ -28,6 +28,7 @@ export const CompaniesForm = () => {
     const [companyImgError, setCompanyImgError] = useState<string | null>(null)
 
     const [isToggleActive, setIsToggleActive] = useState(true)
+    const [initialValues, setInitialValues] = useState<FormValues | null>(null)
 
     const companyImgHandleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
         const reader = new FileReader()
@@ -61,23 +62,43 @@ export const CompaniesForm = () => {
     }, [companyByID])
 
     useEffect(() => {
+        if(!formPurpose) return
+
+        if(formPurpose === FormPurpose.CREATION) {
+            setInitialValues({
+                name: '',
+                alias: '',
+                color1: '#000000',
+                color2: '#000000',
+                active: 0
+            })
+        }
+
+        if(!companyByID.id) return
+
+        if(formPurpose === FormPurpose.EDITION) {
+            setInitialValues({
+                name: companyByID.name,
+                alias: companyByID.alias,
+                color1: companyByID.color1,
+                color2: companyByID.color2,
+                active: companyByID.active
+            })
+        }
+    }, [companyByID, formPurpose])
+
+    useEffect(() => {
         if (companyImg) setCompanyImgError(null)
     }, [companyImg])
 
-    if (!formPurpose) return <h1>Cargando...</h1>
+    if (!formPurpose || !initialValues) return <h1>Cargando...</h1>
     if(formPurpose === FormPurpose.EDITION && !companyByID.id) return <h1>Cargando...</h1>
     if (fetching) return <h1>Cargando...</h1>
 
     return (
         <AdminLayout logo={false} currentPageName={formPurpose === FormPurpose.CREATION ? 'Nueva empresa' : 'Editar empresa'}>
             <Formik
-                initialValues={{
-                    name: companyByID.name ? companyByID.name : '',
-                    alias: companyByID.alias ? companyByID.alias : '',
-                    color1: companyByID.color1 ? companyByID.color1 : '#000000',
-                    color2: companyByID.color2 ? companyByID.color2 : '#000000',
-                    active: companyByID.active ? companyByID.active : '',
-                }}
+                initialValues={initialValues}
                 validationSchema={
                     Yup.object({
                         name: Yup.string().required("Dato requerido"),

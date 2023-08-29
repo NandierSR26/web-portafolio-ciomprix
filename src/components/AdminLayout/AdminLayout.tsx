@@ -31,7 +31,7 @@ export const AdminLayout = ({ children, currentPageName, logo }: AdminLayoutProp
                         onClick={() => setIsOpen(true)}
                     />
 
-                    <figure>
+                    <figure className="w-40 sm:w-52">
                         <img src={logoCiom} alt="logo" />
                     </figure>
 
@@ -58,7 +58,7 @@ export const AdminLayout = ({ children, currentPageName, logo }: AdminLayoutProp
 
 
             <aside
-                className={`${styles.sidemenu} ${isOpen ? styles.open : ''} fixed w-[420px] h-screen top-0 left-0 bg-white p-5`}
+                className={`${styles.sidemenu} ${isOpen ? styles.open : ''} fixed w-full xs:w-[300px] h-screen top-0 left-0 bg-white p-5`}
             >
                 <div className="flex justify-between gap-5 items-center">
                     <h2 className="text-3xl font-bold mb-3 text-black">Administrador</h2>

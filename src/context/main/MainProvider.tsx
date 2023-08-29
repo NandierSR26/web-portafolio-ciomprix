@@ -3,6 +3,7 @@ import { MainContext } from "./MainContext"
 import { api } from "../../api"
 import { ICategory, ICompany, IContent, IRegisterUserData, ISolutions, IUser } from "../../interfaces"
 import toast from 'react-hot-toast'
+import { useLocation } from "react-router-dom"
 
 interface MainProviderProps {
     children: ReactNode
@@ -10,12 +11,14 @@ interface MainProviderProps {
 
 export const MainProvider = ({ children }: MainProviderProps) => {
 
+    const { pathname } = useLocation()
+
     const { categoriesApi, companiesApi, contentsApi, solutionsApi, usersApi } = api()
 
     const [fetching, setFetching] = useState(true)
 
     const [solutions, setSolutions] = useState<ISolutions[]>([])
-    const [solutionByID, setSolutionByID] = useState<ISolutions>()
+    const [solutionByID, setSolutionByID] = useState<ISolutions>({} as ISolutions)
 
     const [categories, setCategories] = useState<ICategory[]>([])
     const [categoryByID, setCategoryById] = useState<ICategory>({} as ICategory)
@@ -53,11 +56,11 @@ export const MainProvider = ({ children }: MainProviderProps) => {
             return data
         } catch (error) {
             console.log(error)
-            return {}
+            return {} as ISolutions
         }
     }
 
-    const createSolution = async (dataValues: ISolutions) => {
+    const createSolution = async (dataValues: FormData) => {
 
         try {
             const { data: { data, message } } = await solutionsApi.createSolution(dataValues)
@@ -69,7 +72,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         }
     }
 
-    const updateSolution = async (id: number, dataValues: ISolutions) => {
+    const updateSolution = async (id: number, dataValues: FormData) => {
         setSolutionByID({} as ISolutions)
         try {
             const { data: { data, message } } = await solutionsApi.updateSolution(id, dataValues)
@@ -92,7 +95,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     const deleteSolution = async (id: number) => {
         try {
             const { data: { data, message } } = await solutionsApi.deleteSolution(id)
-            
+
             const newSolutions = solutions.filter(solution => solution.id !== id)
             setSolutions(newSolutions)
         } catch (error) {
@@ -248,7 +251,6 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     const getCompanies = async () => {
         try {
             const { data: { data } } = await companiesApi.getAllCompanies()
-            console.log(data)
             setCompanies(data)
         } catch (error) {
             console.log(error)
@@ -264,9 +266,9 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         }
     }
 
-    const getCompanyByAlias = async(alias:string) => {
+    const getCompanyByAlias = async (alias: string) => {
         try {
-            const { data:{ data } } = await companiesApi.getCompanyByAlias(alias)
+            const { data: { data } } = await companiesApi.getCompanyByAlias(alias)
             console.log(data)
             setCompanyByAlias(data)
         } catch (error) {
@@ -287,9 +289,9 @@ export const MainProvider = ({ children }: MainProviderProps) => {
 
     const updateCompany = async (id: number, dataValues: FormData) => {
         try {
-            const { data:{ data, message } } = await companiesApi.updateCompany(id, dataValues)
-            
-            const index = companies.findIndex( company => company.id === data.id)
+            const { data: { data, message } } = await companiesApi.updateCompany(id, dataValues)
+
+            const index = companies.findIndex(company => company.id === data.id)
             companies[index] = data
 
             setCompanyByID(data)
@@ -303,7 +305,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
     const deleteCompany = async (id: number) => {
         try {
             const { data } = await companiesApi.deleteCompany(id)
-            
+
             setCompanies(companies.filter(company => company.id !== id))
         } catch (error) {
             console.log(error)
@@ -360,7 +362,7 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         try {
             const { data } = await usersApi.deleteUser(id)
 
-            const newUsers = users.filter( user => user.id !== id)
+            const newUsers = users.filter(user => user.id !== id)
             setUsers(newUsers)
         } catch (error) {
             console.log(error)
@@ -374,6 +376,16 @@ export const MainProvider = ({ children }: MainProviderProps) => {
         getCategories()
         getCompanies()
     }, [])
+
+    // useEffect(() => {
+    //     if (pathname.includes('/admin/create')) {
+    //         setSolutionByID({} as ISolutions)
+    //         setCategoryById({} as ICategory)
+    //         setContentsByID({} as IContent)
+    //         setCompanyByID({} as ICompany)
+    //         setUserByID({} as IUser)
+    //     }
+    // }, [pathname])
 
     return (
         <MainContext.Provider value={{

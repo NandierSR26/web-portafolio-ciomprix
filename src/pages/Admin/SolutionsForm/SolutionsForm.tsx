@@ -17,7 +17,7 @@ interface FormValues {
 
 export const SolutionsForm = () => {
 
-    const { getSolutionByID, updateSolution, createSolution, fetching, solutionByID } = useMainContext()
+    const { getSolutionByID, updateSolution, createSolution, fetching, solutionByID, setFetching } = useMainContext()
     const { pathname } = useLocation()
     const { id: id_solution } = useParams()
     const navigate = useNavigate()
@@ -32,6 +32,7 @@ export const SolutionsForm = () => {
     const [solutionBannerError, setSolutionBannerError] = useState<string | null>(null)
 
     const [isToggleActive, setIsToggleActive] = useState(true)
+    const [initialValues, setInitialValues] = useState<FormValues | null>(null)
 
     const solutionImgHandleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
         const reader = new FileReader()
@@ -79,36 +80,58 @@ export const SolutionsForm = () => {
     useEffect(() => {
         if (!id_solution) return
 
-        getSolutionByID(Number(id_solution)).then(solution => console.log(solution))
+        setFetching(true)
+        getSolutionByID(Number(id_solution)).then(solution => {
+            setTimeout(() => {
+                setFetching(false)
+            }, 1000)
+        })
     }, [])
 
     useEffect(() => {
-        if(!solutionByID) return
+        if (!solutionByID) return
 
-        if(solutionByID?.active_s === 0) setIsToggleActive(false)
-        if(solutionByID?.active_s === 1) setIsToggleActive(true)
+        if (solutionByID?.active_s === 0) setIsToggleActive(false)
+        if (solutionByID?.active_s === 1) setIsToggleActive(true)
     }, [solutionByID])
 
     useEffect(() => {
-        if(solutionBanner) setSolutionBannerError(null)
-        if(solutionImg) setSolutionImgError(null)
+        
+        if (formPurpose === FormPurpose.CREATION) {
+            setInitialValues({
+                tittle_s: '',
+                description_s: '',
+                active_s: 0,
+            })
+        }
+        
+        if (!formPurpose || !solutionByID.id) return
+
+        if (formPurpose === FormPurpose.EDITION) {
+            setInitialValues({
+                tittle_s: solutionByID.tittle_s,
+                description_s: solutionByID.description_s,
+                active_s: solutionByID.active_s,
+            })
+        }
+    }, [formPurpose, solutionByID])
+
+    useEffect(() => {
+        if (solutionBanner) setSolutionBannerError(null)
+        if (solutionImg) setSolutionImgError(null)
     }, [solutionImg, solutionBanner])
 
 
 
-    if (!formPurpose) return <h1>Cargando...</h1>
+    if (!formPurpose || !initialValues) return <h1>Cargando...</h1>
     if (formPurpose === FormPurpose.EDITION && !solutionByID) return <h1>Cargando...</h1>
-    if(fetching) return <h1>Cargando...</h1>
+    if (fetching) return <h1>Cargando...</h1>
 
     return (
         <AdminLayout logo={false} currentPageName={formPurpose === FormPurpose.CREATION ? 'Nueva solución' : 'Editar solución'}>
             <>
                 <Formik
-                    initialValues={{
-                        tittle_s: solutionByID ? solutionByID?.tittle_s : '',
-                        description_s: solutionByID ? solutionByID?.description_s : '',
-                        active_s: solutionByID ? solutionByID?.active_s : 0
-                    } as FormValues}
+                    initialValues={initialValues}
                     validationSchema={
                         Yup.object({
                             tittle_s: Yup.string().required('Dato requerido'),
@@ -131,7 +154,7 @@ export const SolutionsForm = () => {
                             formData.append('img_banner_s', solutionBanner.file)
                             formData.append('active_s', isToggleActive ? '1' : '0')
 
-                            createSolution(formData as ISolutions)
+                            createSolution(formData)
                             navigate(-1)
                             return
                         }
@@ -144,7 +167,7 @@ export const SolutionsForm = () => {
                             solutionBanner && formData.append('img_banner_s', solutionBanner.file)
                             formData.append('active_s', isToggleActive ? '1' : '0')
 
-                            updateSolution(Number(id_solution), formData as ISolutions)
+                            updateSolution(Number(id_solution), formData)
                         }
                     }}
                 >

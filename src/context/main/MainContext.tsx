@@ -7,7 +7,7 @@ interface MainContextProps {
 
     // soluciones
     solutions: ISolutions[];
-    solutionByID: ISolutions | undefined;
+    solutionByID: ISolutions;
 
     // categorias
     categories: ICategory[];
@@ -39,8 +39,8 @@ interface MainContextProps {
     // solutions
     getSolutions: () => Promise<void>;
     getSolutionByID: (id: number) => Promise<ISolutions>;
-    createSolution: (data: ISolutions) => Promise<void>
-    updateSolution: (id: number, data: ISolutions) => Promise<void>;
+    createSolution: (data: FormData) => Promise<void>
+    updateSolution: (id: number, data: FormData) => Promise<void>;
     deleteSolution: (id: number) => Promise<void>;
 
     // categories

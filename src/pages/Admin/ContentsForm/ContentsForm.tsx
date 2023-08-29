@@ -37,6 +37,8 @@ export const ContentsForm = () => {
     const [contentVideoOrigin, setContentVideoOrigin] = useState(1)
     const [isToggleActive, setIsToggleActive] = useState(true)
 
+    const [initialValues, setInitialValues] = useState<FormValues | null>(null)
+
     const contentHandleChange = ({ target }: ChangeEvent<HTMLInputElement>) => {
         const reader = new FileReader()
         const file = target.files && target.files[0]
@@ -73,7 +75,13 @@ export const ContentsForm = () => {
 
     useEffect(() => {
         if (!id_content) return
-        getContentByID(Number(id_content))
+
+        setFetching(true)
+        getContentByID(Number(id_content)).then(content => {
+            setTimeout(() => {
+                setFetching(false)
+            }, 1000)
+        })
     }, [])
 
     useEffect(() => {
@@ -82,27 +90,46 @@ export const ContentsForm = () => {
     }, [contentImg, contentVideo])
 
     useEffect(() => {
-        if(!contentsByID.id) return
+        if (!contentsByID.id) return
 
         // setContentVideoOrigin(contentsByID.vid_sc_origin ? contentsByID.vid_sc_origin : 0)
-        if(contentsByID.active_sc === 0) setIsToggleActive(false)
-        if(contentsByID.active_sc === 1) setIsToggleActive(true)
+        if (contentsByID.active_sc === 0) setIsToggleActive(false)
+        if (contentsByID.active_sc === 1) setIsToggleActive(true)
         // console.log(contentsByID)
     }, [contentsByID])
 
-    if (!formPurpose) return <h1>Cargando...</h1>
+    useEffect(() => {
+        if (!formPurpose) return
+
+        if (formPurpose === FormPurpose.CREATION) {
+            setInitialValues({
+                tittle_sc: '',
+                description_sc: '',
+                vid_sc: '',
+                id_c: 0
+            })
+        }
+
+        if (!contentsByID.id) return
+
+        if (formPurpose === FormPurpose.EDITION) {
+            setInitialValues({
+                tittle_sc: contentsByID.tittle_sc,
+                description_sc: contentsByID.description_sc,
+                vid_sc: contentsByID.vid_sc,
+                id_c: contentsByID.id_c,
+            })
+        }
+    }, [formPurpose, contentsByID])
+
+    if (!formPurpose || !initialValues) return <h1>Cargando...</h1>
     if (formPurpose === FormPurpose.EDITION && !contentsByID.id) return <h1>Cargando...</h1>
     if (fetching) return <h1>Cargando</h1>
 
     return (
         <AdminLayout logo={false} currentPageName={formPurpose === FormPurpose.CREATION ? 'Nuevo contenido' : 'Editar contenido'}>
             <Formik
-                initialValues={{
-                    tittle_sc: contentsByID.tittle_sc ? contentsByID.tittle_sc : '',
-                    description_sc: contentsByID.description_sc ? contentsByID.description_sc : '',
-                    vid_sc: videoOption === 'video - url' && contentsByID.vid_sc ? contentsByID.vid_sc : '',
-                    id_c: contentsByID.id_c ? contentsByID.id_c : ''
-                } as FormValues}
+                initialValues={initialValues}
                 validationSchema={
                     (videoOption === "video - url")
                         ? Yup.object({
@@ -141,7 +168,7 @@ export const ContentsForm = () => {
 
                         // formData.forEach((value, key) => console.log({key, value}))
                         // return
-                        
+
                         createContent(formData)
                         navigate(-1)
                         return
