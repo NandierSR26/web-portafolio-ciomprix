@@ -90,7 +90,7 @@ export const CategoryDetail = () => {
                 </div>
             </section>
 
-            <Footer company={companyByAlias.name} logo={companyByAlias.logo} />
+            <Footer company={companyByAlias.nombre} logo={companyByAlias.logo} />
 
             <ModalVideo />
         </main>

@@ -106,7 +106,7 @@ export const Landing = () => {
                 ))
             }
 
-            <Footer logo={companyByAlias.id ? companyByAlias.logo : ciomprixLogo} company={companyByAlias.name ? companyByAlias.name : "Ciomprix"} />
+            <Footer logo={companyByAlias.id ? companyByAlias.logo : ciomprixLogo} company={companyByAlias.nombre ? companyByAlias.nombre : "Ciomprix"} />
         </div>
     )
 }
